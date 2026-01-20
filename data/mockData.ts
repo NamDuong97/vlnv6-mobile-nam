@@ -1,0 +1,166 @@
+import { Company, Job, JobCategory, Tag } from '../types';
+
+export const mockJobs: Job[] = [
+    {
+        id: '1',
+        title: 'TUYỂN GẤP 3 LĐPT UU TIÊN NGƯỜI LỚN TUỔI,HƯU SỚM LÀM TẠI CỬA...',
+        company: 'CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ...',
+        salary: '8,6 - 12,6 triệu/tháng',
+        location: 'Quận 3, TP.HCM',
+        timePosted: 'Hôm qua',
+        isHot: true,
+    },
+    {
+        id: '2',
+        title: 'THÔNG TIN CỬA HÀNG ĐANG TUYỂN DỤNG',
+        company: 'CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ...',
+        salary: '7,5 - 13 triệu/tháng',
+        location: 'Quận 12, TP.HCM',
+        timePosted: 'Hôm qua',
+        isHot: true,
+    },
+    {
+        id: '3',
+        title: 'TIỀN ĂN TẾT - THÔNG BÁO GẤP CẦN 2 BẠN LÀM VIỆC TẠI CỬA HÀNG HCM',
+        company: 'CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ...',
+        salary: '8 - 14 triệu/tháng',
+        location: 'Huyện Hóc Môn, TP.HCM',
+        timePosted: '23 phút trước',
+        isHot: true,
+    },
+    {
+        id: '4',
+        title: '[BÌNH TÂN] CÔNG TY CẦN TUYỂN TÀI XẾ LÁI XE B2 (LÁI XE VAN)',
+        company: 'CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ XUẤT...',
+        salary: '11 - 13 triệu/tháng',
+        location: 'Quận Bình Tân, TP.HCM',
+        timePosted: '15 phút trước',
+    },
+    {
+        id: '5',
+        title: 'TRƯỜNG NHÓM KINH DOANH DU LỊCH',
+        company: 'CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ DU LỊCH...',
+        salary: '10 - 20 triệu/tháng',
+        location: 'Quận Bình Thạnh, TP.HCM',
+        timePosted: '22 phút trước',
+    },
+    {
+        id: '6',
+        title: '[TẾT ] Tuyển Nhân Viên Dọn Dẹp Và Sắp Xếp Hàng Hoá Cho Cửa Hàng',
+        company: 'CÔNG TY TNHH SẢN XUẤT VÀ THƯƠNG MẠI MỸ...',
+        salary: '7 - 8,5 triệu/tháng',
+        location: 'Quận 12, TP.HCM',
+        timePosted: '42 phút trước',
+    },
+    {
+        id: '7',
+        title: 'Nhân Viên Văn Hành Hệ Thống TAP (TikTok Partner)',
+        company: 'CÔNG TY TNHH ASTRA MEDIA',
+        salary: '8 - 13 triệu/tháng',
+        location: 'Quận Phú Nhuận, TP.HCM',
+        timePosted: 'Hôm qua',
+    },
+    {
+        id: '8',
+        title: 'Karaoke Bảo Ngọc tuyển nam phục vụ',
+        company: 'CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ KARAOKE...',
+        salary: '10 - 20 triệu/tháng',
+        location: 'Quận 8, TP.HCM',
+        timePosted: 'Hôm qua',
+    },
+];
+
+export const mockCompanies: Company[] = [
+    {
+        id: '1',
+        name: 'CÔNG TY TNHH SX TM VŨ THIÊN',
+        logo: '🏢',
+        industry: 'Nhà hàng / Khách sạn - Bán lẻ / Hàng tiêu dùng...',
+        jobCount: 1,
+        isVerified: true,
+    },
+    {
+        id: '2',
+        name: 'CÔNG TY TNHH CÔNG NGHỆ MÔI TRƯỜNG HOPSON',
+        logo: '🏭',
+        industry: 'Sản xuất',
+        jobCount: 2,
+        isVerified: true,
+    },
+    {
+        id: '3',
+        name: 'CÔNG TY TNHH CPG VIỆT NAM',
+        logo: '🏗️',
+        industry: 'Thiết kế / Kiến trúc',
+        jobCount: 1,
+        isVerified: true,
+    },
+    {
+        id: '4',
+        name: 'CÔNG TY CỔ PHẦN ĐẦU TƯ THE GATS',
+        logo: '💼',
+        industry: 'Nhà hàng / Khách sạn',
+        jobCount: 2,
+        isVerified: true,
+    },
+    {
+        id: '5',
+        name: 'CÔNG TY CỔ PHẦN DỊCH VỤ BẢO VỆ CHUYÊN NGHIỆP AN NINH MIỀN BẮC',
+        logo: '🛡️',
+        industry: 'Khác',
+        jobCount: 12,
+        isVerified: true,
+    },
+];
+
+export const mockCategories: JobCategory[] = [
+    {
+        id: '1',
+        name: 'Việc làm Tết',
+        icon: '🎊',
+        jobCount: 4905,
+        isHot: true,
+        color: '#ef4444',
+    },
+    {
+        id: '2',
+        name: 'Bán hàng tại quầy',
+        icon: '🏪',
+        jobCount: 4905,
+        color: '#3b82f6',
+    },
+    {
+        id: '3',
+        name: 'Tài xế, lái xe',
+        icon: '🚕',
+        jobCount: 809,
+        color: '#f59e0b',
+    },
+    {
+        id: '4',
+        name: 'Giao chỉ hàng',
+        icon: '📦',
+        jobCount: 2733,
+        color: '#8b5cf6',
+    },
+    {
+        id: '5',
+        name: 'Giúp việc, tạp vụ',
+        icon: '🔧',
+        jobCount: 782,
+        color: '#10b981',
+    },
+    {
+        id: '6',
+        name: 'Tất cả ngành nghề',
+        icon: '📋',
+        color: '#6366f1',
+    },
+];
+
+export const mockTags: Tag[] = [
+    { id: '1', name: 'Thiết kế', icon: '🎨' },
+    { id: '2', name: 'Nhân viên bán hàng', icon: '👔' },
+    { id: '3', name: 'Bảo vệ quản 7', icon: '🛡️' },
+    { id: '4', name: 'Việc làm D', icon: '💼' },
+];

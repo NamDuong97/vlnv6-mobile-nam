@@ -1,1 +1,0 @@
-# vlnv6-mobile
