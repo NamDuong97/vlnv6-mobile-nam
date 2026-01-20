@@ -1,40 +1,91 @@
+import { Image } from 'expo-image';
 import React from 'react';
-import { View, TextInput, TouchableOpacity, Text } from 'react-native';
+import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 interface SearchBarProps {
   placeholder?: string;
   onSearch?: () => void;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ 
-  placeholder = 'Nhập tên công việc, công ty...', 
-  onSearch 
+export const SearchBar: React.FC<SearchBarProps> = ({
+  placeholder = 'Nhập tên công việc, công ty...',
+  onSearch
 }) => {
+  const popularSearches = [
+    'IT', 'Kinh doanh', 'Marketing', 'Kế toán', 'Nhân sự',
+    'Bất động sản', 'Bán hàng', 'Kỹ sư', 'Thiết kế', 'Văn phòng'
+  ];
+
   return (
-    <View className="bg-white rounded-xl shadow-md p-4 mx-4">
-      <View className="flex-row items-center border border-gray-300 rounded-lg px-3 py-2 mb-3">
-        <Text className="text-gray-400 mr-2">🔍</Text>
-        <TextInput
-          placeholder={placeholder}
-          placeholderTextColor="#9ca3af"
-          className="flex-1 text-gray-700"
-        />
-      </View>
-
-      <TouchableOpacity className="flex-row items-center justify-between border border-gray-300 rounded-lg px-3 py-3 mb-4">
-        <View className="flex-row items-center">
-          <Text className="text-gray-400 mr-2">📍</Text>
-          <Text className="text-gray-700">Toàn quốc</Text>
+    <View className=" rounded-t-3xl px-4 pt-6 pb-4">
+      <View className="space-y-2">
+        {/* Ô tìm kiếm công việc */}
+        <View className="flex-row items-center border-2 border-blue-500 rounded-xl px-4 py-3 bg-white">
+          <Image
+            source={require('@/assets/images/search-blue.svg')}
+            style={{ width: 20, height: 20, marginRight: 12 }}
+          />
+          <TextInput
+            placeholder={placeholder}
+            placeholderTextColor="#6b7280"
+            className="flex-1 text-gray-800 text-base"
+          />
         </View>
-        <Text className="text-gray-400">▼</Text>
-      </TouchableOpacity>
 
-      <TouchableOpacity 
-        onPress={onSearch}
-        className="bg-primary-600 rounded-lg py-3 items-center"
-      >
-        <Text className="text-white font-bold text-base">Tìm ngay</Text>
-      </TouchableOpacity>
+        {/* Ô chọn địa điểm */}
+        <TouchableOpacity
+          className="flex-row items-center justify-between border-2 border-blue-500 rounded-xl px-4 py-3 bg-white my-3"
+        >
+          <View className="flex-row items-center">
+            <Image
+              source={require('@/assets/images/search-location-blue.svg')}
+              style={{ width: 20, height: 20, marginRight: 12 }}
+            />
+            <Text className="text-gray-800 text-base">Toàn quốc</Text>
+          </View>
+          <Image
+            source={require('@/assets/images/chevron-down.svg')}
+            style={{ width: 24, height: 24 }}
+          />
+        </TouchableOpacity>
+
+        {/* Nút tìm kiếm */}
+        <TouchableOpacity
+          onPress={onSearch}
+          className="bg-blue-600 rounded-xl py-3 items-center mt-4"
+          activeOpacity={0.8}
+        >
+          <Text className="text-white font-bold text-lg">Tìm ngay</Text>
+        </TouchableOpacity>
+
+        {/* Tiêu đề */}
+        <Text className="text-xl font-bold text-blue-800 mt-5">
+          Tìm kiếm nhiều nhất hôm nay:
+        </Text>
+
+        {/* Hashtags - Scroll ngang */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          className="my-3"
+        >
+          <View className="flex-row flex-wrap">
+            {popularSearches.map((tag, index) => (
+              <TouchableOpacity
+                key={index}
+                className="flex-row rounded-full pr-4 py-1 mr-2"
+              >
+                <Image
+                  source={require('@/assets/images/dash-icon.svg')}
+                  style={{ width: 14, height: 19, marginRight: 4 }}
+                />
+                <Text className="text-black font-medium">{tag}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
+
+      </View>
     </View>
   );
 };
