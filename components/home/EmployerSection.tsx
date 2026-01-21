@@ -4,7 +4,7 @@ import FeatureCard from './FeatureCard';
 
 export default function EmployerSection() {
     return (
-        <View className="bg-white mx-4 rounded-2xl p-6 mb-6">
+        <View className="bg-white py-6 px-4 mb-6">
             <View className="flex-row items-center mb-4">
                 {/* <Text className="text-2xl mr-2">🔥</Text> */}
                 <Text className="text-xl font-bold text-black">Dành cho nhà tuyển dụng</Text>

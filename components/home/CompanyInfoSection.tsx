@@ -155,7 +155,7 @@ Bên cạnh đó, trang Cẩm nang nghề nghiệp - Là nơi tổng hợp nhữ
     };
 
     return (
-        <View className="mx-4 mb-8 bg-white rounded-xl p-6 shadow-sm">
+        <View className="mb-8 bg-white p-6 shadow-sm">
             <Text className="text-sm text-gray-600 mb-4 leading-6">
                 {renderText(displayContent)}
             </Text>

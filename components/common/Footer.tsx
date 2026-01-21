@@ -5,7 +5,7 @@ import { Text, View } from 'react-native';
 
 const Footer = () => {
     return (
-        <View className="bg-gray-100 px-4 pt-6 pb-20">
+        <View className="bg-white px-4 pt-6 pb-16">
             <View className="flex-row items-center mb-4">
                 <Image source={require('@/assets/images/vieclam.svg')}
                     className="w-24 h-8"

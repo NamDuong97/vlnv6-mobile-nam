@@ -117,7 +117,7 @@ export const mockCategories: JobCategory[] = [
     {
         id: '1',
         name: 'Việc làm Tết',
-        icon: '🎊',
+        icon: 'job-tet',
         jobCount: 4905,
         isHot: true,
         color: '#ef4444',
@@ -125,36 +125,41 @@ export const mockCategories: JobCategory[] = [
     {
         id: '2',
         name: 'Bán hàng tại quầy',
-        icon: '🏪',
+        icon: 'ban-hang-tai-quay',
         jobCount: 4905,
         color: '#3b82f6',
+        isHot: false
     },
     {
         id: '3',
         name: 'Tài xế, lái xe',
-        icon: '🚕',
+        icon: 'tai-xe-lai-xe',
         jobCount: 809,
         color: '#f59e0b',
+        isHot: false
     },
     {
         id: '4',
         name: 'Giao chỉ hàng',
-        icon: '📦',
+        icon: 'giao-cho-hang',
         jobCount: 2733,
         color: '#8b5cf6',
+        isHot: false
     },
     {
         id: '5',
         name: 'Giúp việc, tạp vụ',
-        icon: '🔧',
+        icon: 'giup-viec-tap-vu',
         jobCount: 782,
         color: '#10b981',
+        isHot: false
     },
     {
         id: '6',
         name: 'Tất cả ngành nghề',
-        icon: '📋',
+        icon: 'tat-ca-nganh',
         color: '#6366f1',
+        isHot: false
     },
 ];
 

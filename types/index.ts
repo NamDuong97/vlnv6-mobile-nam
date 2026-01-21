@@ -20,17 +20,28 @@ export interface Company {
   isVerified?: boolean;
 }
 
-export interface JobCategory {
-  id: string;
-  name: string;
-  icon: string;
-  jobCount?: number;
-  color?: string;
-  isHot?: boolean;
-}
 
 export interface Tag {
   id: string;
   name: string;
   icon?: string;
+}
+
+// Định nghĩa các key hợp lệ
+export type IconKey =
+  | 'job-tet'
+  | 'ban-hang-tai-quay'
+  | 'tai-xe-lai-xe'
+  | 'giao-cho-hang'
+  | 'giup-viec-tap-vu'
+  | 'tat-ca-nganh';
+
+
+export interface JobCategory {
+  id: string;
+  name: string;
+  icon: IconKey;
+  jobCount?: number;
+  color?: string;
+  isHot?: boolean;
 }
