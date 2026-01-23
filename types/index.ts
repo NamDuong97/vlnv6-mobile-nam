@@ -1,15 +1,3 @@
-export interface Job {
-  id: string;
-  title: string;
-  company: string;
-  companyLogo?: string;
-  salary: string;
-  location: string;
-  timePosted: string;
-  isHot?: boolean;
-  isUrgent?: boolean;
-  jobCount?: number;
-}
 
 export interface Company {
   id: string;
@@ -19,7 +7,6 @@ export interface Company {
   jobCount: number;
   isVerified?: boolean;
 }
-
 
 export interface Tag {
   id: string;
@@ -37,11 +24,70 @@ export type IconKey =
   | 'tat-ca-nganh';
 
 
-export interface JobCategory {
-  id: string;
+// Types cho API response
+export interface ApiResponse<T = any> {
+  success: boolean;
+  data: T;
+  message?: string;
+  meta?: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
+export interface PaginationParams {
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+}
+
+// HTTP Status Codes
+export enum HTTP_STATUS {
+  OK = 200,
+  CREATED = 201,
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  FORBIDDEN = 403,
+  NOT_FOUND = 404,
+  INTERNAL_SERVER_ERROR = 500,
+}
+
+// Error types
+export interface ApiError {
+  message: string;
+  code: number;
+  data?: any;
+  originalError?: any;
+}
+
+// Auth types
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+export interface RegisterData extends LoginCredentials {
   name: string;
-  icon: IconKey;
-  jobCount?: number;
-  color?: string;
-  isHot?: boolean;
+  phone?: string;
+}
+
+export interface AuthResponse {
+  access_token: string;
+  refresh_token: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    avatar?: string;
+  };
+}
+
+export interface JobApplication {
+  jobId: string;
+  resume?: string;
+  coverLetter?: string;
+  additionalInfo?: string;
 }

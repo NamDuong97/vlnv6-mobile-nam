@@ -1,5 +1,5 @@
 import { mockJobs } from '@/data/mockData'
-import { Job } from '@/types'
+import { Job } from '@/types/jobs'
 import { Image } from 'expo-image'
 import React from 'react'
 import { ImageBackground, Text, View } from 'react-native'
@@ -11,18 +11,18 @@ const HotJobSection = () => {
             <View className='flex-col rounded-t-xl h-12 w-full'>
                 <ImageBackground
                     source={require('@/assets/images/special-job-bg.png')}
-                    className="flex-row items-center mb-3 h-full"
+                    className="flex-row items-center mb-3 h-full rounded-t-2xl overflow-hidden"
                     resizeMode="cover"
                 >
                     <Image
                         source={require('@/assets/images/special-job.svg')}
-                        style={{ width: 24, height: 24 }}
+                        style={{ width: 24, height: 24, marginLeft: 5, marginRight: 3 }}
                         contentFit='contain'
                     />
-                    <Text className="text-lg font-bold text-gray-800">Việc làm nổi bật</Text>
+                    <Text className="text-lg font-bold text-white">Việc làm nổi bật</Text>
                 </ImageBackground>
             </View>
-            <View className="bg-white px-4 mt-4">
+            <View className="bg-white px-4 mt-5">
                 {mockJobs.slice(0, 3).map((job: Job) => (
                     <JobCard
                         key={job.id}

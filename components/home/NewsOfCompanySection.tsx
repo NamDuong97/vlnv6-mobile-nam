@@ -6,17 +6,17 @@ import React from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { JobCard } from './JobCard';
 
-const LastestJobSection = () => {
+const NewsOfCompanySection = () => {
     return (
-        <View className="bg-white my-1.5 px-4 py-5">
+        <View className="bg-white my-4 px-4 py-5">
             <View className="flex-row items-center mb-3">
                 <Image
-                    source={require('@/assets/images/job-latest-icon-home.svg')}
+                    source={require('@/assets/images/business-latest-icon-home.svg')}
                     style={{ width: 24, height: 24, marginRight: 4 }}
                 />
-                <Text className="text-lg font-bold text-gray-800">Việc làm mới nhất</Text>
+                <Text className="text-lg font-bold text-gray-800">Tin từ doanh nghiệp</Text>
             </View>
-            {mockJobs.slice(9, 15).map((job: Job) => (
+            {mockJobs.slice(3, 9).map((job: Job) => (
                 <JobCard
                     key={job.id}
                     job={job}
@@ -29,7 +29,7 @@ const LastestJobSection = () => {
                 className="self-center flex-row items-center justify-center rounded-lg border border-blue-600 py-2 px-4 "
             >
                 <Text className="text-blue-600 font-medium mr-1 text-[15px]">
-                    Xem thêm {mockJobs.length - 6} tin tuyển dụng
+                    Xem thêm {mockJobs.length - 6} tin doanh nghiệp
                 </Text>
                 <Ionicons name="chevron-forward" size={16} color="#2563EB" />
             </Pressable>
@@ -37,4 +37,4 @@ const LastestJobSection = () => {
     )
 }
 
-export default LastestJobSection
+export default NewsOfCompanySection

@@ -17,8 +17,17 @@ module.exports = {
         text: {
           primary: '#0f172a',
           secondary: '#64748b',
+        },
+        aqua: {
+          100: 'rgb(220, 249, 247)',
+          // Có thể thêm các shade khác
+          200: 'rgb(200, 239, 237)',
+          300: 'rgb(180, 229, 227)',
+        },
+        grey: {
+          100: 'rgb(100, 100, 109)',
         }
-      }
+      },
     },
   },
   plugins: [],

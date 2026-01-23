@@ -6,7 +6,7 @@ const BenefitsSection = () => {
     return (
         <>
             {/* Call to Action */}
-            <View className="mx-4 my-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-6" >
+            <View className="mx-4 mt-5 mb-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-6" >
                 <Text className="text-2xl font-bold text-black mb-2">
                     Bạn đang tìm kiếm việc làm?
                 </Text>
@@ -20,7 +20,7 @@ const BenefitsSection = () => {
 
             {/* Benefits Section */}
             <View className="mx-4 mb-8" >
-                <View className="bg-white rounded-xl p-4 mb-3 shadow-sm">
+                <View className="border-[1px] border-gray-400 rounded-xl p-4 mb-4">
                     <View className="flex-row items-center mb-2">
                         <Image
                             source={require('@/assets/images/create-jobseeker-home-icon-1.svg')}
@@ -30,7 +30,7 @@ const BenefitsSection = () => {
                     </View>
                 </View>
 
-                <View className="bg-white rounded-xl p-4 mb-3 shadow-sm">
+                <View className="border-[1px] border-gray-400 rounded-xl p-4 mb-4">
                     <View className="flex-row items-center mb-2">
                         <Image
                             source={require('@/assets/images/create-jobseeker-home-icon-2.svg')}
@@ -40,7 +40,7 @@ const BenefitsSection = () => {
                     </View>
                 </View>
 
-                <View className="bg-white rounded-xl p-4 mb-3 shadow-sm">
+                <View className="border-[1px] border-gray-400 rounded-xl p-4 mb-4">
                     <View className="flex-row items-center mb-2">
                         <Image
                             source={require('@/assets/images/create-jobseeker-home-icon-3.svg')}
@@ -50,7 +50,7 @@ const BenefitsSection = () => {
                     </View>
                 </View>
 
-                <View className="bg-white rounded-xl p-4 shadow-sm">
+                <View className="border-[1px] border-gray-400 rounded-xl p-4">
                     <View className="flex-row items-center mb-2">
                         <Image
                             source={require('@/assets/images/create-jobseeker-home-icon-4.svg')}

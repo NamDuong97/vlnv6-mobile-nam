@@ -16,13 +16,13 @@ const Footer = () => {
 
             {/* Schema */}
             <View className="mb-4">
-                <Text className="font-bold text-gray-800 mb-2">Trung tâm hỗ trợ</Text>
+                <Text className="font-bold text-primary mb-2">Trung tâm hỗ trợ</Text>
                 <Text className="text-sm text-gray-600 mb-4">
                     CÔNG TY CỔ PHẦN ĐỊNH ANH
                 </Text>
                 <Text className="text-sm text-gray-600 mb-1">MST: 0100255844, cấp ngày 11/12/2008</Text>
                 <Text className="text-sm text-gray-600 mb-1">Hotline: 028 7300 1234 - 024 7300 1234</Text>
-                <Text className="text-sm text-gray-600 mb-1">Văn phòng giao dịch</Text>
+                <Text className="text-sm text-gray-800 mb-1">Văn phòng giao dịch</Text>
                 <Text className="text-sm text-gray-600 mb-1">A35 Nam Quang 2, P.Tân Phong, Quận 7, TPHCM</Text>
                 <Text className="text-sm text-gray-600 mb-1">38 Cửa Đông, P.Cửa Đông, Quận Hoàn Kiếm, Hà Nội</Text>
             </View>
@@ -30,7 +30,7 @@ const Footer = () => {
             {/* About Company And Candidate*/}
             <View className="flex-row justify-between mb-4">
                 <View className="flex-1 mr-4">
-                    <Text className="font-semibold text-gray-800 mb-2">Về chúng tôi</Text>
+                    <Text className="font-semibold text-primary mb-2">Về chúng tôi</Text>
                     <Text className="text-sm text-gray-600 mb-1">Bảng giá dịch vụ</Text>
                     <Text className="text-sm text-gray-600 mb-1">Điều khoản sử dụng</Text>
                     <Text className="text-sm text-gray-600 mb-1">Quy chế hoạt động</Text>
@@ -39,7 +39,7 @@ const Footer = () => {
                 </View>
 
                 <View className="flex-1">
-                    <Text className="font-semibold text-gray-800 mb-2">Dành cho ứng viên</Text>
+                    <Text className="font-semibold text-primary mb-2">Dành cho ứng viên</Text>
                     <Text className="text-sm text-gray-600 mb-1">Tạo hồ sơ</Text>
                     <Text className="text-sm text-gray-600 mb-1">Tìm việc làm</Text>
                     <Text className="text-sm text-gray-600 mb-1">Cẩm nang nghề nghiệp</Text>
@@ -50,7 +50,7 @@ const Footer = () => {
             {/* Employer And Social network*/}
             <View className="flex-row justify-between mb-4">
                 <View className="flex-1 mr-4">
-                    <Text className="font-semibold text-gray-800 mb-2">Dành cho nhà tuyển dụng</Text>
+                    <Text className="font-semibold text-primary mb-2">Dành cho nhà tuyển dụng</Text>
                     <Text className="text-sm text-gray-600 mb-1">Tìm kiếm ứng viên</Text>
                     <Text className="text-sm text-gray-600 mb-1">Quản lý ứng viên</Text>
                     <Text className="text-sm text-gray-600 mb-1">Quản lý tin tuyển dụng</Text>
@@ -58,7 +58,7 @@ const Footer = () => {
                 </View>
 
                 <View className="flex-1">
-                    <Text className="font-semibold text-gray-800 mb-2">Mạng xã hội</Text>
+                    <Text className="font-semibold text-primary mb-2">Mạng xã hội</Text>
 
                     <View className="flex-row mb-2">
                         <Link href={'https://www.tiktok.com/@vieclamnet'} className='mr-2'>

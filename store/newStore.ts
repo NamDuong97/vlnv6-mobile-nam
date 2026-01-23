@@ -1,5 +1,6 @@
+import { newsService } from '@/api/services/newServices';
 import { create } from 'zustand';
-import { Category, News } from '../types/news';
+import { Category, News, NewsFilters, NewsFormData } from '../types/news';
 
 interface NewsState {
     news: News[];
@@ -7,6 +8,7 @@ interface NewsState {
     selectedCategory: string | null;
     loading: boolean;
     error: string | null;
+    total: number;
 
     // Actions
     setNews: (news: News[]) => void;
@@ -15,7 +17,8 @@ interface NewsState {
     setSelectedCategory: (category: string | null) => void;
     setLoading: (loading: boolean) => void;
     setError: (error: string | null) => void;
-    fetchNews: () => Promise<void>;
+    fetchNews: (params: NewsFilters) => Promise<void>;
+    createNews: (newsData: NewsFormData) => Promise<News | null>;
 }
 
 export const useNewsStore = create<NewsState>((set, get) => ({
@@ -30,6 +33,7 @@ export const useNewsStore = create<NewsState>((set, get) => ({
     selectedCategory: null,
     loading: false,
     error: null,
+    total: 0,
 
     setNews: (news) => set({ news }),
 
@@ -45,15 +49,41 @@ export const useNewsStore = create<NewsState>((set, get) => ({
 
     setError: (error) => set({ error }),
 
-    fetchNews: async () => {
+    fetchNews: async (params) => {
         set({ loading: true, error: null });
         try {
-            // Giả lập API call
-            const response = await fetch('https://api.example.com/news');
-            const data = await response.json();
-            set({ news: data, loading: false });
+            // Sử dụng service để call api lưu vào store
+            const newNews = await newsService.getLatestNews(params);
+            set({ news: newNews, loading: false });
         } catch (error) {
             set({ error: 'Failed to fetch news', loading: false });
         }
     },
+
+    createNews: async (newsData: NewsFormData) => {
+        set({ loading: true, error: null });
+
+        try {
+            const newNews = await newsService.createNews(newsData);
+
+            // Thêm vào đầu danh sách
+            set((state) => ({
+                news: [newNews, ...state.news],
+                total: state.total + 1,
+                loading: false,
+            }));
+
+            return newNews;
+        } catch (error: any) {
+            set({
+                error: error.message || 'Không thể tạo tin mới',
+                loading: false
+            });
+            return null;
+        }
+    },
 }));
+
+
+
+

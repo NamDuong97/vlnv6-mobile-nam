@@ -22,7 +22,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ image, title, subtitle, link 
   }
 
   return (
-    <TouchableOpacity className="bg-white rounded-xl overflow-hidden shadow-sm mb-4"
+    <TouchableOpacity className="bg-white border-[1px] border-gray-100 rounded-xl overflow-hidden shadow-sm mb-4"
       onPress={onHandlePressCard}
     >
       {/* Image */}

@@ -99,6 +99,8 @@ Bên cạnh đó, trang Cẩm nang nghề nghiệp - Là nơi tổng hợp nhữ
             result = result.replace(regex, `**${word}**`);
         });
 
+        console.log(result);
+
         // Split và render
         return result.split('**').map((part, index) => {
             // Các phần lẻ (1, 3, 5...) là highlighted
@@ -106,13 +108,13 @@ Bên cạnh đó, trang Cẩm nang nghề nghiệp - Là nơi tổng hợp nhữ
 
             if (isHighlighted) {
                 return (
-                    <Text key={index} className="text-primary-600 font-semibold">
+                    <Text key={index} className="text-primary font-semibold">
                         {part}
                     </Text>
                 );
             }
 
-            return <Text key={index}>{part}</Text>;
+            return <Text key={index} className="text-gray-600">{part}</Text>;
         });
     };
 
@@ -125,8 +127,7 @@ Bên cạnh đó, trang Cẩm nang nghề nghiệp - Là nơi tổng hợp nhữ
                     {displayTableData.map((column, colIndex) => (
                         <View
                             key={colIndex}
-                            className="w-[48%] mb-6" // 2 columns trên mobile
-                        // Hoặc className="w-[31%] mb-6" cho 3 columns
+                            className="w-[48%] mb-6"
                         >
                             {/* Tiêu đề cột */}
                             <Text className="font-bold text-gray-700 mb-3 text-base">
@@ -156,7 +157,7 @@ Bên cạnh đó, trang Cẩm nang nghề nghiệp - Là nơi tổng hợp nhữ
 
     return (
         <View className="mb-8 bg-white p-6 shadow-sm">
-            <Text className="text-sm text-gray-600 mb-4 leading-6">
+            <Text className="text-sm mb-4 leading-6">
                 {renderText(displayContent)}
             </Text>
 

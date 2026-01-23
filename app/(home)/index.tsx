@@ -1,5 +1,6 @@
 import Footer from '@/components/common/Footer';
 import { Header } from '@/components/common/Header';
+import BannerSlideshow from '@/components/home/BannerSlideshow';
 import BenefitsSection from '@/components/home/BenefitsSection';
 import CategorySection from '@/components/home/CategorySection';
 import CompanyInfoSection from '@/components/home/CompanyInfoSection';
@@ -9,6 +10,7 @@ import FilterSection from '@/components/home/FilterSection';
 import { FixedFooter } from '@/components/home/FixedFooter';
 import HotJobSection from '@/components/home/HotJobSection';
 import LastestJobSection from '@/components/home/LastestJobSection';
+import NewsOfCompanySection from '@/components/home/NewsOfCompanySection';
 import { mockCompanies } from '@/data/mockData';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
@@ -60,6 +62,12 @@ export default function HomeScreen() {
 
         {/* Hot Jobs Section */}
         <HotJobSection />
+
+        {/* Hot Jobs Section */}
+        <BannerSlideshow />
+
+        {/* News Of Company Section */}
+        <NewsOfCompanySection />
 
         {/* Latest Jobs Section */}
         <LastestJobSection />

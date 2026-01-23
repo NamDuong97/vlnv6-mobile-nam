@@ -18,3 +18,17 @@ export interface Category {
     slug: string;
     icon: string;
 }
+
+export interface NewsFormData {
+    title: string;
+    content: string;
+    category: string;
+    imageUrl?: string;
+    tags?: string[];
+    isFeatured?: boolean;
+    isHot?: boolean;
+}
+
+export interface NewsFilters {
+
+}
