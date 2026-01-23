@@ -99,8 +99,6 @@ Bên cạnh đó, trang Cẩm nang nghề nghiệp - Là nơi tổng hợp nhữ
             result = result.replace(regex, `**${word}**`);
         });
 
-        console.log(result);
-
         // Split và render
         return result.split('**').map((part, index) => {
             // Các phần lẻ (1, 3, 5...) là highlighted

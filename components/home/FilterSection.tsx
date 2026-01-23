@@ -1,8 +1,11 @@
 import { Image } from 'expo-image';
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import LocationPickerModal from './LocaltionPickerModal';
 
 const FilterSection = () => {
+    const [openModalLocation, setOpenModalLocation] = useState(false);
+
     const popularSearches = [
         'IT', 'Kinh doanh', 'Marketing', 'Kế toán', 'Nhân sự',
         'Bất động sản', 'Bán hàng', 'Kỹ sư', 'Thiết kế', 'Văn phòng'
@@ -12,10 +15,14 @@ const FilterSection = () => {
         console.log('Searching...')
     }
 
+    const handleOpenModalLocation = () => {
+        setOpenModalLocation((pre) => !pre)
+    }
+
     return (
-        <View className="py-4 bg-white rounded-t-3xl mb-1">
+        <View className="relative py-6 px-3 bg-white rounded-t-3xl mb-1 gap-6 mt-[-22px]">
             {/* Title Section */}
-            <View className="px-4 mb-4">
+            <View>
                 <Text className="text-[16px] font-bold text-gray-800 mb-1">
                     Việc tìm đúng người
                 </Text>
@@ -25,10 +32,10 @@ const FilterSection = () => {
             </View>
 
             {/* Search Bar Section */}
-            <View className="px-4 py-4">
+            <View className="gap-6">
                 <View className="space-y-2">
                     {/* Ô tìm kiếm công việc */}
-                    <View className="flex-row items-center border-2 border-blue-500 rounded-xl px-4 py-1 bg-white">
+                    <View className="flex-row items-center border-[1px] border-blue-500 rounded-xl px-4 py-1 bg-white">
                         <Image
                             source={require('@/assets/images/search-blue.svg')}
                             style={{ width: 20, height: 20, marginRight: 10 }}
@@ -42,23 +49,28 @@ const FilterSection = () => {
                     </View>
 
                     {/* Ô chọn địa điểm */}
-                    <TouchableOpacity
-                        className="flex-row items-center justify-between border-2 border-blue-500 rounded-xl px-4 py-3 bg-white my-3"
-                    >
-                        <View className="flex-row items-center">
+                    <View className='relative'>
+                        <TouchableOpacity
+                            onPress={handleOpenModalLocation}
+                            className="flex-row items-center justify-between border-[1px] border-blue-500 rounded-xl px-4 py-3 bg-white my-3"
+                        >
+                            <View className="flex-row items-center">
+                                <Image
+                                    source={require('@/assets/images/search-location-blue.svg')}
+                                    style={{ width: 20, height: 20, marginRight: 12 }}
+                                    contentFit='contain'
+                                />
+                                <Text className="text-gray-800 text-base text-[14px]">Toàn quốc</Text>
+                            </View>
                             <Image
-                                source={require('@/assets/images/search-location-blue.svg')}
-                                style={{ width: 20, height: 20, marginRight: 12 }}
-                                contentFit='contain'
+                                source={require('@/assets/images/chevron-down.svg')}
+                                style={{ width: 24, height: 24 }}
+                                contentFit="contain"
                             />
-                            <Text className="text-gray-800 text-base text-[14px]">Toàn quốc</Text>
-                        </View>
-                        <Image
-                            source={require('@/assets/images/chevron-down.svg')}
-                            style={{ width: 24, height: 24 }}
-                            contentFit="contain"
-                        />
-                    </TouchableOpacity>
+                        </TouchableOpacity>
+
+                        {openModalLocation ?? <LocationPickerModal />}
+                    </View>
 
                     {/* Nút tìm kiếm */}
                     <TouchableOpacity
