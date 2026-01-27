@@ -1,6 +1,6 @@
 import { useNewsStore } from '@/store/newStore';
 import { useSavedStore } from '@/store/saveStore';
-import { News } from '@/types/news';
+import { News } from '@/types/classified';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';

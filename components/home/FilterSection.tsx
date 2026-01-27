@@ -5,6 +5,7 @@ import LocationPickerModal from './LocaltionPickerModal';
 
 const FilterSection = () => {
     const [openModalLocation, setOpenModalLocation] = useState(false);
+    const [selectedLocation, setSelectedLocation] = useState("Toàn quốc");
 
     const popularSearches = [
         'IT', 'Kinh doanh', 'Marketing', 'Kế toán', 'Nhân sự',
@@ -15,10 +16,17 @@ const FilterSection = () => {
         console.log('Searching...')
     }
 
-    const handleOpenModalLocation = () => {
-        setOpenModalLocation((pre) => !pre)
+    const handleCloseModal = () => {
+        setOpenModalLocation(false);
     }
 
+    const handleOpenModalLocation = () => {
+        setOpenModalLocation(true)
+    }
+
+    const handleSelectLocation = (location: string) => {
+        setSelectedLocation(location);
+    };
     return (
         <View className="relative py-6 px-3 bg-white rounded-t-3xl mb-1 gap-6 mt-[-22px]">
             {/* Title Section */}
@@ -60,7 +68,7 @@ const FilterSection = () => {
                                     style={{ width: 20, height: 20, marginRight: 12 }}
                                     contentFit='contain'
                                 />
-                                <Text className="text-gray-800 text-base text-[14px]">Toàn quốc</Text>
+                                <Text className="text-gray-800 text-base text-[14px]">{selectedLocation}</Text>
                             </View>
                             <Image
                                 source={require('@/assets/images/chevron-down.svg')}
@@ -69,7 +77,14 @@ const FilterSection = () => {
                             />
                         </TouchableOpacity>
 
-                        {openModalLocation ?? <LocationPickerModal />}
+                        {openModalLocation && (
+                            <LocationPickerModal
+                                visible={openModalLocation}
+                                onClose={handleCloseModal}
+                                onSelectLocation={handleSelectLocation}
+                                currentLocation={selectedLocation}
+                            />
+                        )}
                     </View>
 
                     {/* Nút tìm kiếm */}

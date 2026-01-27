@@ -55,11 +55,11 @@ export const apiGet = async <T = any>(
     config: CustomAxiosRequestConfig = {}
 ): Promise<T> => {
     const finalConfig = await setAuthHeader(config);
-    const response: AxiosResponse<ApiResponse<T>> = await axiosClient.get(url, {
+    const response = await axiosClient.get(url, {
         params,
         ...finalConfig
     });
-    return response.data.data;
+    return response.data;
 };
 
 // Raw axios methods (trả về full response)

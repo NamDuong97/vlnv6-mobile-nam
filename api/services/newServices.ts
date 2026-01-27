@@ -1,9 +1,6 @@
-import { News, NewsFilters, NewsFormData } from '@/types/news';
+import { News, NewsFilters, NewsFormData } from '@/types/classified';
 import { API_ENDPOINTS } from '../config/apiConstants';
 import { apiGet, apiPost } from '../config/axiosClient';
-
-const API_URL = 'https://newsapi.org/v2'; // Hoặc API của bạn
-const API_KEY = 'a32ea7d27f7c48058fc92779f1f340cb';
 
 export const newsService = {
     // Lấy tin tức mới nhất

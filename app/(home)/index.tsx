@@ -11,7 +11,6 @@ import { FixedFooter } from '@/components/home/FixedFooter';
 import HotJobSection from '@/components/home/HotJobSection';
 import LastestJobSection from '@/components/home/LastestJobSection';
 import NewsOfCompanySection from '@/components/home/NewsOfCompanySection';
-import { mockCompanies } from '@/data/mockData';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -58,7 +57,7 @@ export default function HomeScreen() {
         <CategorySection />
 
         {/* Featured Companies */}
-        <CompanySection companies={mockCompanies} />
+        <CompanySection />
 
         {/* Hot Jobs Section */}
         <HotJobSection />

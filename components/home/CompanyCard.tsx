@@ -1,14 +1,15 @@
-import { Company } from '@/types';
+import { OrganizationItem } from '@/types/org';
 import { Image } from 'expo-image';
 import React from 'react';
 import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 
 interface CompanyCardProps {
-  company: Company;
+  company: OrganizationItem;
 
 }
 
 export const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
+  console.log("company ", company);
   return (
     <TouchableOpacity
       onPress={() => console.log('Da bam vao component companycard')}
@@ -16,7 +17,19 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
     >
       <View className="flex-row items-start mb-1">
         <View className="w-20 h-20 bg-white rounded-lg items-center justify-center mr-3 border border-blue-100">
-          <Text className="text-2xl ">{company.logo}</Text>
+          {
+            company.logo ?
+              <Image
+                source={{ uri: company.logo }}
+                style={{ width: 58, height: 58, marginRight: 3, padding: 4 }}
+                contentFit='cover'
+              /> :
+              <Image
+                source={require('@/assets/images/default-logo-org.svg')}
+                style={{ width: 58, height: 58, marginRight: 3, padding: 4 }}
+                contentFit='cover'
+              />
+          }
         </View>
 
         <View className="flex-1 bg-aqua-100 rounded-xl h-[68px] overflow-hidden">
@@ -32,7 +45,7 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
                 </Text>
               </View>
               <Text className="text-xs text-grey-100 overflow-hidden" numberOfLines={1}>
-                {company.industry}
+                {company.industries}
               </Text>
             </View>
           </ImageBackground>
@@ -47,13 +60,11 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
             contentFit='contain'
           />
           <Text className="text-sm text-gray-700 font-medium">
-            {company.jobCount} công việc
+            {company.jobs} công việc
           </Text>
         </View>
         <View className="flex-row items-center">
-          {company.isVerified && (
-            <Text className="flex-row justify-center align-middle pl-[5px] pb-1 text-white text-[12px] bg-green-700 ml-2 rounded-full w-5 h-5">✓</Text>
-          )}
+          <Text className="flex-row justify-center align-middle pl-[5px] pb-1 text-white text-[12px] bg-green-700 ml-2 rounded-full w-5 h-5">✓</Text>
         </View>
       </View>
     </TouchableOpacity>

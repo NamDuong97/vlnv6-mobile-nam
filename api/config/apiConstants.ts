@@ -1,5 +1,5 @@
 // Base URLs
-export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'https://api.yourdomain.com/api/v1';
+export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL2
 export const API_TIMEOUT = 30000; // 30 seconds
 
 // API Endpoints
@@ -29,15 +29,19 @@ export const API_ENDPOINTS = {
     RECOMMENDED_JOBS: '/jobs/recommended',
     HOT_JOBS: '/jobs/hot',
 
-    // Companies
-    COMPANIES_LIST: '/companies',
-    COMPANY_DETAIL: (id: string | number) => `/companies/${id}`,
+    // Organization
+    ORG_LIST: '/job/v1/organizations/listing',
+    ORG_OUTSTANDING: '/job/v1/organizations/outstanding',
 
     // Upload
     UPLOAD: '/upload',
 
-    // News
-    NEWS_LIST: '/news',
-    NEW_CREATE: '/new/create'
+    // Classified
+    CLASSIFIED_FEATURED: '/listing/v1/jobclassifieds/topads?site_id=3&category_id=3&limit=6&offset=0&page_type=home',
+    CLASSIFIED_LATEST: '/job/v1/classifieds/latest?limit=9&offset=0',
+    CLASSIFIED_COMPANY: '/job/v1/classifieds/enterprise?limit=9&offset=0',
+
+    //Citys
+    CITIES: '/job/v1/cities/config',
 } as const;
 

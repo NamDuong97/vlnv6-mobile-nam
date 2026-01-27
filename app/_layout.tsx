@@ -1,4 +1,7 @@
+import { AppSplash } from '@/components/common/AppSplash';
+import { useBootstrap } from '@/hooks/useBootstrap';
 import { useTheme } from '@/hooks/useTheme';
+import { useBootstrapStore } from '@/store/indexStore';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
@@ -12,10 +15,15 @@ import '../global.css';
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  // ✅ GỌI Ở ĐÂY
+  useBootstrap();
+
   const [fontsLoaded, fontError] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     ...FontAwesome.font,
   });
+
+  const ready = useBootstrapStore(s => s.ready)
 
   useEffect(() => {
     if (fontError) {
@@ -32,6 +40,10 @@ export default function RootLayout() {
 
   if (!fontsLoaded) {
     return null; // Hoặc return loading indicator
+  }
+
+  if (!ready) {
+    return <AppSplash />
   }
 
   return <RootLayoutNav />;

@@ -25,8 +25,16 @@ module.exports = {
           300: 'rgb(180, 229, 227)',
         },
         grey: {
+          200: '#212325',
           100: 'rgb(100, 100, 109)',
+          50: 'rgb(49 49 75)',
         }
+      },
+      fontFamily: {
+        // Định nghĩa các font family
+        'sans': ['Inter', 'system-ui', 'sans-serif'],
+        'serif': ['Merriweather', 'serif'],
+        'mono': ['Fira Code', 'monospace'],
       },
     },
   },
@@ -36,7 +44,7 @@ module.exports = {
 // tailwind.config.js không dùng esm mà dùng commonjs
 // tailwind.config.js là file cấu hình Tailwind CSS, 
 // dùng để định nghĩa các class utility mà bạn được phép dùng trong app React Native (Expo) khi sử dụng NativeWind.
-// 📌 Trong dự án React Native + Expo, file này giúp:
+// Trong dự án React Native + Expo, file này giúp:
 // Khai báo màu sắc, font, spacing, breakpoints
 // Bật class NativeWind (className)
 // Chỉ định file nào được scan để sinh class

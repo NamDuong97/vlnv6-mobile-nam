@@ -1,11 +1,11 @@
 // CompanyList.tsx
-import { Company } from '@/types';
+import { OrganizationItem } from '@/types/org';
 import React from 'react';
 import { View } from 'react-native';
 import { CompanyCard } from './CompanyCard';
 
 interface Props {
-    companies: Company[];
+    companies: OrganizationItem[];
 }
 
 const CompanyList: React.FC<Props> = ({ companies }) => {

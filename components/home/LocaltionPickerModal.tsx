@@ -1,116 +1,400 @@
-import { JSX, useState } from "react";
-import { FlatList, Modal, Pressable, Text, View, } from "react-native";
+import {
+    useCitySelectors,
+    useCityStore,
+    useProvincesWithoutWholeCountry
+} from '@/store/cityStore';
+import { Image } from 'expo-image';
+import React, { useEffect, useMemo, useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-type Province = "TP.HCM" | "Hà Nội";
+interface LocationPickerModalProps {
+    visible: boolean;
+    onClose: () => void;
+    onSelectLocation: (location: string) => void;
+    currentLocation?: string;
+}
 
-type LocationData = {
-    [key in Province]: string[];
-};
+export default function LocationPickerModal({
+    visible,
+    onClose,
+    onSelectLocation,
+    currentLocation = "Toàn quốc"
+}: LocationPickerModalProps) {
+    const {
+        // State
+        citiesMap,
+        selectedProvinceId,
+        selectedDistrictId,
+        loading,
+        initialized,
+        hydrated,
 
-const DATA: LocationData = {
-    "TP.HCM": [
-        "Tất cả quận / huyện",
-        "Quận 1",
-        "Quận 3",
-        "Quận 4",
-        "Quận 5",
-    ],
-    "Hà Nội": [
-        "Tất cả quận / huyện",
-        "Ba Đình",
-        "Cầu Giấy",
-        "Đống Đa",
-    ],
-};
+        // Actions
+        setSelectedProvinceId,
+        setSelectedDistrictId,
+        cityRefresh,
 
-export default function LocationPicker(): JSX.Element {
-    const [provinceModal, setProvinceModal] = useState<boolean>(true);
-    const [districtModal, setDistrictModal] = useState<boolean>(false);
+        // Getters
+        getCityById,
+        getSelectedProvince,
+        getSelectedDistrict,
+        getDistrictsByProvinceId,
+        getFullLocationName,
+        isWholeCountrySelected,
+    } = useCityStore();
+    const selectors = useCitySelectors();
+    const provinces = useProvincesWithoutWholeCountry();
+    const [step, setStep] = useState<"province" | "district">("province");
+    const [previouslySelectedProvinceId, setPreviouslySelectedProvinceId] = useState<number | null>(null);
 
-    const [province, setProvince] = useState<Province>("TP.HCM");
-    const [district, setDistrict] = useState<string>("Tất cả quận / huyện");
+    // Computed values
+    const hasData = useMemo(() =>
+        Object.keys(citiesMap).length > 0,
+        [citiesMap]
+    );
 
-    const closeAll = (): void => {
-        setProvinceModal(false);
-        setDistrictModal(false);
+    const selectedProvince = useMemo(() =>
+        getSelectedProvince(),
+        [selectedProvinceId, citiesMap]
+    );
+
+    const selectedDistrict = useMemo(() =>
+        getSelectedDistrict(),
+        [selectedDistrictId, citiesMap]
+    );
+
+    const districts = useMemo(() =>
+        selectedProvinceId ? getDistrictsByProvinceId(selectedProvinceId) : [],
+        [selectedProvinceId, citiesMap]
+    );
+
+    const isWholeCountry = useMemo(() =>
+        isWholeCountrySelected(),
+        [selectedProvinceId]
+    );
+
+    const fullLocationName = useMemo(() =>
+        getFullLocationName(),
+        [selectedProvinceId, selectedDistrictId, citiesMap]
+    );
+
+    // Parse current location khi modal mở - CHỈ chạy 1 lần khi visible thay đổi
+    useEffect(() => {
+        if (visible && hasData) {
+            parseCurrentLocation();
+        }
+    }, [visible, hasData]);
+
+    const parseCurrentLocation = () => {
+        if (currentLocation === "Toàn quốc") {
+            setPreviouslySelectedProvinceId(null);
+            setSelectedProvinceId(null);
+            setSelectedDistrictId(null);
+            setStep("province");
+            return;
+        }
+
+        // Tìm province từ currentLocation
+        const foundProvince = provinces.find(province =>
+            currentLocation.includes(province.name)
+        );
+
+        if (foundProvince) {
+            setPreviouslySelectedProvinceId(foundProvince.id);
+            setSelectedProvinceId(foundProvince.id);
+
+            // Kiểm tra nếu có district trong currentLocation
+            const commaIndex = currentLocation.indexOf(',');
+            if (commaIndex > -1) {
+                const districtPart = currentLocation.substring(0, commaIndex).trim();
+                const districts = getDistrictsByProvinceId(foundProvince.id);
+                const foundDistrict = districts.find(d => d.name === districtPart);
+
+                if (foundDistrict) {
+                    setSelectedDistrictId(foundDistrict.id);
+                    setStep("district");
+                } else {
+                    setStep("province");
+                }
+            } else {
+                setStep("province");
+            }
+        } else {
+            // Không tìm thấy -> về "Toàn quốc"
+            setPreviouslySelectedProvinceId(null);
+            setSelectedProvinceId(null);
+            setSelectedDistrictId(null);
+            setStep("province");
+        }
     };
 
-    return (
-        <View className="absolute bg-white rounded-lg z-[100] left-0 top-14 py-4 px-2 w-full h-36">
-            {/* ===== MODAL 1: CHỌN TỈNH ===== */}
-            <Modal transparent animationType="slide" visible={provinceModal}>
-                <Pressable onPress={closeAll} className="flex-1 bg-black/40" />
+    // Handle province selection
+    const handleSelectProvince = (provinceId: number) => {
+        const province = getCityById(provinceId);
+        if (!province) return;
 
-                <View className="bg-white rounded-t-2xl px-4 pt-4 pb-8 max-h-[70%]">
-                    <Text className="text-lg font-semibold mb-4">
-                        Chọn tỉnh / thành
-                    </Text>
+        setSelectedProvinceId(provinceId);
+        setPreviouslySelectedProvinceId(provinceId);
+        setSelectedDistrictId(null);
+        setStep("district");
 
-                    <FlatList
-                        data={Object.keys(DATA) as Province[]}
-                        keyExtractor={(item) => item}
-                        renderItem={({ item }) => {
-                            const isSelected = item === province;
+        // Cập nhật ngay tỉnh đã chọn
+        onSelectLocation(province.name);
+    };
 
-                            return (
-                                <Pressable
-                                    onPress={() => {
-                                        setProvince(item);
-                                        setDistrict("Tất cả quận / huyện");
-                                        setDistrictModal(true);
-                                    }}
-                                    className="py-4 border-b border-gray-100 flex-row justify-between items-center"
-                                >
-                                    <Text className="text-gray-800">{item}</Text>
-                                    <Text className="text-gray-400">
-                                        {isSelected ? "✓" : "›"}
-                                    </Text>
-                                </Pressable>
-                            );
-                        }}
-                    />
+    // Handle district selection
+    const handleSelectDistrict = (districtId: number | null) => {
+        const province = getSelectedProvince();
+        if (!province) return;
+
+        if (districtId === null) {
+            // Chọn "Tất cả quận/huyện"
+            onSelectLocation(province.name);
+            setSelectedDistrictId(null);
+        } else {
+            const district = getCityById(districtId);
+            if (district) {
+                onSelectLocation(`${district.name}, ${province.name}`);
+                setSelectedDistrictId(districtId);
+            }
+        }
+
+        onClose();
+    };
+
+    // Handle "Toàn quốc" selection
+    const handleSelectWholeCountry = () => {
+        setSelectedProvinceId(null);
+        setSelectedDistrictId(null);
+        onSelectLocation("Toàn quốc");
+        onClose();
+    };
+
+    const handleBack = () => {
+        setStep("province");
+    };
+
+    // Handle refresh data
+    const handleRefresh = async () => {
+        await cityRefresh();
+    };
+
+    // Reset step khi modal đóng
+    useEffect(() => {
+        if (!visible) {
+            const timer = setTimeout(() => {
+                setStep("province");
+            }, 300);
+
+            return () => clearTimeout(timer);
+        }
+    }, [visible]);
+
+    // Không render nếu không visible
+    if (!visible) return null;
+
+    // Loading state
+    if (!hydrated) {
+        return (
+            <View className="absolute top-full mt-1 left-3 right-3 z-50 bg-white rounded-xl border border-gray-200 p-4">
+                <View className="items-center justify-center py-8">
+                    <Text className="text-gray-600">Đang tải dữ liệu địa điểm...</Text>
                 </View>
-            </Modal>
+            </View>
+        );
+    }
 
-            {/* ===== MODAL 2: CHỌN HUYỆN ===== */}
-            <Modal transparent animationType="slide" visible={districtModal}>
-                <Pressable onPress={closeAll} className="flex-1 bg-black/40" />
+    // Empty state
+    if (!hasData && !loading) {
+        return (
+            <View className="absolute top-full mt-1 left-3 right-3 z-50 bg-white rounded-xl border border-gray-200">
+                <View className="px-4 py-3 border-b border-gray-100">
+                    <Text className="text-[20px] font-semibold text-gray-900 text-center">
+                        Chọn khu vực
+                    </Text>
+                </View>
+                <View className="p-6 items-center justify-center">
+                    <Text className="text-gray-500 mb-4">Không có dữ liệu địa điểm</Text>
+                    <TouchableOpacity
+                        onPress={handleRefresh}
+                        className="px-4 py-2 bg-blue-500 rounded-lg"
+                    >
+                        <Text className="text-white font-medium">Thử lại</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        );
+    }
 
-                <View className="bg-white rounded-t-2xl px-4 pt-4 pb-8 max-h-[70%]">
+    return (
+        <>
+            {/* Invisible overlay để bắt sự kiện bấm ra ngoài */}
+            <TouchableOpacity
+                activeOpacity={1}
+                onPress={onClose}
+                className="absolute inset-0 z-40"
+                style={{ backgroundColor: 'transparent' }}
+            />
+
+            {/* Modal content */}
+            <View
+                className="absolute top-full mt-1 left-3 right-3 z-50"
+                style={{
+                    shadowColor: '#000',
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84,
+                    elevation: 5,
+                }}
+            >
+                <View className="bg-white rounded-xl border border-gray-200">
                     {/* HEADER */}
-                    <View className="flex-row items-center mb-4">
-                        <Pressable
-                            onPress={() => setDistrictModal(false)}
-                            className="mr-3"
-                        >
-                            <Text className="text-blue-500 text-lg">←</Text>
-                        </Pressable>
-
-                        <Text className="text-lg font-semibold">
-                            Chọn khu vực
-                        </Text>
+                    <View className="px-4 py-3 border-b border-gray-100">
+                        {step === "province" ? (
+                            <Text className="text-[20px] font-semibold text-gray-900 text-center">
+                                Chọn khu vực
+                            </Text>
+                        ) : (
+                            <View className="flex-row items-center">
+                                <TouchableOpacity
+                                    onPress={handleBack}
+                                    className="mr-3 p-1"
+                                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                                >
+                                    <Image
+                                        source={require('@/assets/images/arrow-left.svg')}
+                                        style={{ width: 24, height: 24 }}
+                                        contentFit="cover"
+                                    />
+                                </TouchableOpacity>
+                                <Text className="text-[20px] font-semibold text-gray-900 flex-1 text-center">
+                                    Chọn khu vực
+                                </Text>
+                            </View>
+                        )}
                     </View>
 
-                    <FlatList
-                        data={DATA[province]}
-                        keyExtractor={(item) => item}
-                        renderItem={({ item }) => (
-                            <Pressable
-                                onPress={() => {
-                                    setDistrict(item);
-                                    closeAll();
-                                }}
-                                className="py-4 border-b border-gray-100 flex-row justify-between items-center"
-                            >
-                                <Text>{item}</Text>
-                                {item === district && (
-                                    <Text className="text-blue-500">✓</Text>
-                                )}
-                            </Pressable>
-                        )}
-                    />
+                    {/* Loading state cho refresh */}
+                    {loading && (
+                        <View className="p-4 items-center justify-center">
+                            <Text className="text-gray-600">Đang cập nhật...</Text>
+                        </View>
+                    )}
+
+                    {/* CONTENT */}
+                    {!loading && (
+                        <ScrollView
+                            className="max-h-[400px]"
+                            showsVerticalScrollIndicator={true}
+                        >
+                            {step === "province" ? (
+                                // DANH SÁCH TỈNH
+                                <>
+                                    {/* "Toàn quốc" option */}
+                                    <TouchableOpacity
+                                        onPress={handleSelectWholeCountry}
+                                        className={`px-4 py-3 flex-row justify-between items-center border-b border-gray-100 active:bg-gray-50`}
+                                    >
+                                        <Text className={`text-[16px] ${isWholeCountry ? 'text-blue-600 font-medium' : 'text-gray-800'}`}>
+                                            Toàn quốc
+                                        </Text>
+                                        {isWholeCountry && (
+                                            <Image
+                                                source={require('@/assets/images/tick-blue.svg')}
+                                                style={{ width: 16, height: 11 }}
+                                                contentFit="cover"
+                                            />
+                                        )}
+                                    </TouchableOpacity>
+
+                                    {/* Danh sách tỉnh */}
+                                    {provinces.map((province, index) => {
+                                        const isSelected = province.id === previouslySelectedProvinceId ||
+                                            province.id === selectedProvinceId;
+
+                                        return (
+                                            <TouchableOpacity
+                                                key={province.id}
+                                                onPress={() => handleSelectProvince(province.id)}
+                                                className={`px-4 py-3 flex-row justify-between items-center ${index !== provinces.length - 1 ? 'border-b border-gray-100' : ''
+                                                    } active:bg-gray-50`}
+                                            >
+                                                <Text className={`text-[16px] ${isSelected ? 'text-blue-600 font-medium' : 'text-gray-800'}`}>
+                                                    {province.name}
+                                                </Text>
+                                                <View className="flex-row items-center">
+                                                    {isSelected ? (
+                                                        <Image
+                                                            source={require('@/assets/images/tick-blue.svg')}
+                                                            style={{ width: 16, height: 11 }}
+                                                            contentFit="cover"
+                                                        />
+                                                    ) : (
+                                                        <Image
+                                                            source={require('@/assets/images/arrow-right.svg')}
+                                                            style={{ width: 24, height: 24 }}
+                                                            contentFit="cover"
+                                                        />
+                                                    )}
+                                                </View>
+                                            </TouchableOpacity>
+                                        );
+                                    })}
+                                </>
+                            ) : (
+                                // DANH SÁCH HUYỆN
+                                <>
+                                    {selectedProvince && (
+                                        <>
+                                            {/* "Tất cả quận/huyện" option */}
+                                            <TouchableOpacity
+                                                onPress={() => handleSelectDistrict(null)}
+                                                className={`px-4 py-3 flex-row justify-between items-center border-b border-gray-100 active:bg-gray-50`}
+                                            >
+                                                <Text className={`text-[16px] ${!selectedDistrict ? 'text-blue-600 font-medium' : 'text-gray-800'}`}>
+                                                    Tất cả quận / huyện
+                                                </Text>
+                                                {!selectedDistrict && (
+                                                    <Image
+                                                        source={require('@/assets/images/tick-blue.svg')}
+                                                        style={{ width: 16, height: 11 }}
+                                                        contentFit="cover"
+                                                    />
+                                                )}
+                                            </TouchableOpacity>
+
+                                            {/* Danh sách quận/huyện */}
+                                            {districts.map((district, index) => {
+                                                const isSelected = district.id === selectedDistrictId;
+
+                                                return (
+                                                    <TouchableOpacity
+                                                        key={district.id}
+                                                        onPress={() => handleSelectDistrict(district.id)}
+                                                        className={`px-4 py-3 flex-row justify-between items-center ${index !== districts.length - 1 ? 'border-b border-gray-100' : ''
+                                                            } active:bg-gray-50`}
+                                                    >
+                                                        <Text className={`text-[16px] ${isSelected ? 'text-blue-600 font-medium' : 'text-gray-800'}`}>
+                                                            {district.name}
+                                                        </Text>
+                                                        {isSelected && (
+                                                            <Image
+                                                                source={require('@/assets/images/tick-blue.svg')}
+                                                                style={{ width: 16, height: 11 }}
+                                                                contentFit="cover"
+                                                            />
+                                                        )}
+                                                    </TouchableOpacity>
+                                                );
+                                            })}
+                                        </>
+                                    )}
+                                </>
+                            )}
+                        </ScrollView>
+                    )}
                 </View>
-            </Modal>
-        </View>
+            </View>
+        </>
     );
 }
