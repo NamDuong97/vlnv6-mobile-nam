@@ -17,7 +17,9 @@ interface ClassifiedState {
     error: string | null;
     initialized: boolean;
     hydrated: boolean;
-    total: number;
+    totalFeaturedJobs: number;
+    totalLatestJobs: number;
+    totalCompanyJobs: number;
 
     // Setters
     setFeaturedJobs: (jobs: UnifiedJobItem[]) => void;
@@ -57,7 +59,9 @@ export const useClassifiedStore = create<ClassifiedState>((set, get) => ({
     error: null,
     initialized: false,
     hydrated: false,
-    total: 0,
+    totalFeaturedJobs: 0,
+    totalLatestJobs: 0,
+    totalCompanyJobs: 0,
 
     // Setters
     setFeaturedJobs: (jobs) => {
@@ -112,7 +116,7 @@ export const useClassifiedStore = create<ClassifiedState>((set, get) => ({
             set({
                 loading: false,
                 error: null,
-                total: response.total
+                totalFeaturedJobs: response.total
             });
         } catch (error: any) {
             set({
@@ -132,7 +136,7 @@ export const useClassifiedStore = create<ClassifiedState>((set, get) => ({
             set({
                 loading: false,
                 error: null,
-                total: response.total
+                totalLatestJobs: response.total
             });
         } catch (error: any) {
             set({
@@ -152,7 +156,7 @@ export const useClassifiedStore = create<ClassifiedState>((set, get) => ({
             set({
                 loading: false,
                 error: null,
-                total: response.total
+                totalCompanyJobs: response.total
             });
         } catch (error: any) {
             set({
@@ -201,6 +205,10 @@ export const useClassifiedStore = create<ClassifiedState>((set, get) => ({
                 classifiedService.getLatestJobs(),
                 classifiedService.getCompanyJobs()
             ]);
+            
+            console.log("so tin tu doanh nghiep: ", companyResponse.total)
+            console.log("so tin moi nhat: ", latestResponse.total)
+            console.log("so tin noi bat: ", featuredResponse.total)
 
             const data1 = featuredResponse.items.map(item => mapClassifiedToUnified(item))
             const data2 = latestResponse.items.map(item => mapLatestJobToUnified(item))
@@ -221,7 +229,9 @@ export const useClassifiedStore = create<ClassifiedState>((set, get) => ({
             set({
                 loading: false,
                 error: null,
-                total: featuredResponse.total + latestResponse.total + companyResponse.total
+                totalFeaturedJobs: featuredResponse.total,
+                totalLatestJobs : latestResponse.total,
+                totalCompanyJobs : companyResponse.total
             });
         } catch (e) {
             console.warn('Fetch classifieds failed', e);
@@ -241,7 +251,9 @@ export const useJobsMap = () => useClassifiedStore(state => state.jobsMap);
 export const useClassifiedLoading = () => useClassifiedStore(state => state.loading);
 export const useClassifiedError = () => useClassifiedStore(state => state.error);
 export const useClassifiedHydrated = () => useClassifiedStore(state => state.hydrated);
-export const useTotalJobs = () => useClassifiedStore(state => state.total);
+export const useTotalFeaturedJobs = () => useClassifiedStore(state => state.totalFeaturedJobs);
+export const useTotalLatestJobs = () => useClassifiedStore(state => state.totalLatestJobs);
+export const useTotalCompanyJobs = () => useClassifiedStore(state => state.totalCompanyJobs);
 
 // Enhanced selectors
 export const useClassifiedSelectors = () => {

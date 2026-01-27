@@ -1,4 +1,4 @@
-import { useClassifiedError, useClassifiedLoading, useClassifiedStore, useCompanyJobs } from '@/store/classifiedStore';
+import { useClassifiedError, useClassifiedLoading, useClassifiedStore, useCompanyJobs, useTotalCompanyJobs } from '@/store/classifiedStore';
 import { UnifiedJobItem } from '@/types/classified';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
@@ -11,6 +11,7 @@ const NewsOfCompanySection = () => {
     const companyJobs = useCompanyJobs();
     const loading = useClassifiedLoading();
     const error = useClassifiedError();
+    const totalCompanyJobs = useTotalCompanyJobs();
     const fetchCompanyJobs = useClassifiedStore(state => state.fetchCompanyJobs);
 
     // Xử lý loading
@@ -49,8 +50,6 @@ const NewsOfCompanySection = () => {
 
     // Lấy 6 jobs đầu tiên để hiển thị
     const displayJobs = companyJobs.slice(0, 6);
-    const remainingJobs = companyJobs.length - 6;
-    console.log("displayJobs-company ", displayJobs)
 
     return (
         <View className="bg-white my-4 px-4 py-5">
@@ -82,13 +81,13 @@ const NewsOfCompanySection = () => {
                 </View>
             )}
 
-            {remainingJobs > 0 && (
+            {totalCompanyJobs > 0 && (
                 <Pressable
                     onPress={() => console.log("alo bam vao xem all")}
                     className="self-center flex-row items-center justify-center rounded-lg border border-blue-600 py-2 px-4 "
                 >
                     <Text className="text-blue-600 font-medium mr-1 text-[15px]">
-                        Xem thêm {remainingJobs} tin doanh nghiệp
+                        Xem thêm {totalCompanyJobs} tin doanh nghiệp
                     </Text>
                     <Ionicons name="chevron-forward" size={16} color="#2563EB" />
                 </Pressable>

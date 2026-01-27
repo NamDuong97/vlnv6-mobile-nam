@@ -3,6 +3,7 @@ import { useCityStore } from '@/store/cityStore';
 import { useClassifiedStore } from '@/store/classifiedStore';
 import { useBootstrapStore } from '@/store/indexStore';
 import { useOrgStore } from '@/store/orgStore';
+import { usePageMetaStore } from '@/store/pageMetaStore';
 import { useEffect } from 'react';
 
 export const useBootstrap = () => {
@@ -13,6 +14,8 @@ export const useBootstrap = () => {
     const orgRefresh = useOrgStore(state => state.orgRefresh)
     const classifiedHydrate = useClassifiedStore(state => state.classifiedHydrate)
     const classifiedRefresh = useClassifiedStore(state => state.classifiedRefresh)
+    const pageMetaHydrate = usePageMetaStore(state => state.pageMetaHydrate)
+    const pageMetaRefresh = usePageMetaStore(state => state.pageMetaRefresh)
 
     useEffect(() => {
         const init = async () => {
@@ -20,6 +23,7 @@ export const useBootstrap = () => {
                 cityHydrate(),
                 orgHydrate(),
                 classifiedHydrate(),
+                pageMetaHydrate(),
                 // categoryHydrate()
             ])
 
@@ -29,6 +33,7 @@ export const useBootstrap = () => {
                 cityRefresh(),
                 orgRefresh(),
                 classifiedRefresh(),
+                pageMetaRefresh()
                 // categoryRefresh()
             ])
         }

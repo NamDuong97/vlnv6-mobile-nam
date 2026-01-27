@@ -154,7 +154,7 @@ export default function LocationPickerModal({
         } else {
             const district = getCityById(districtId);
             if (district) {
-                onSelectLocation(`${district.name}, ${province.name}`);
+                onSelectLocation(`${district.name}`);
                 setSelectedDistrictId(districtId);
             }
         }
@@ -284,12 +284,14 @@ export default function LocationPickerModal({
                     {/* CONTENT */}
                     {!loading && (
                         <ScrollView
-                            className="max-h-[400px]"
+                            style={{ maxHeight: 430 }} // Đảm bảo có maxHeight
+                            contentContainerStyle={{ flexGrow: 1 }}
                             showsVerticalScrollIndicator={true}
+                            nestedScrollEnabled={true}
                         >
                             {step === "province" ? (
                                 // DANH SÁCH TỈNH
-                                <>
+                                <View> 
                                     {/* "Toàn quốc" option */}
                                     <TouchableOpacity
                                         onPress={handleSelectWholeCountry}
@@ -320,7 +322,7 @@ export default function LocationPickerModal({
                                                     } active:bg-gray-50`}
                                             >
                                                 <Text className={`text-[16px] ${isSelected ? 'text-blue-600 font-medium' : 'text-gray-800'}`}>
-                                                    {province.name}
+                                                    {province.name || 'Không xác định'}
                                                 </Text>
                                                 <View className="flex-row items-center">
                                                     {isSelected ? (
@@ -340,10 +342,10 @@ export default function LocationPickerModal({
                                             </TouchableOpacity>
                                         );
                                     })}
-                                </>
+                                </View>
                             ) : (
                                 // DANH SÁCH HUYỆN
-                                <>
+                                <View> 
                                     {selectedProvince && (
                                         <>
                                             {/* "Tất cả quận/huyện" option */}
@@ -375,7 +377,7 @@ export default function LocationPickerModal({
                                                             } active:bg-gray-50`}
                                                     >
                                                         <Text className={`text-[16px] ${isSelected ? 'text-blue-600 font-medium' : 'text-gray-800'}`}>
-                                                            {district.name}
+                                                            {district.name || 'Không xác định'}
                                                         </Text>
                                                         {isSelected && (
                                                             <Image
@@ -389,7 +391,7 @@ export default function LocationPickerModal({
                                             })}
                                         </>
                                     )}
-                                </>
+                                </View>
                             )}
                         </ScrollView>
                     )}

@@ -48,7 +48,6 @@ const HotJobSection = () => {
 
     // Lấy 6 jobs đầu tiên để hiển thị
     const displayJobs = featuredJobs.slice(0, 3);
-    console.log("hot job: ", displayJobs)
 
     return (
         <View className="bg-white mt-4 mb-4">

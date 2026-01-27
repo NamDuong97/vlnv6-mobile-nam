@@ -74,14 +74,14 @@ export const setupInterceptors = (axiosInstance: AxiosInstance): void => {
             }
 
             // Log request (chỉ trong dev)
-            if (__DEV__) {
-                console.log('API Request:', {
-                    url: config.url,
-                    method: config.method,
-                    params: config.params,
-                    data: config.data,
-                });
-            }
+            // if (__DEV__) {
+            //     console.log('API Request:', {
+            //         url: config.url,
+            //         method: config.method,
+            //         params: config.params,
+            //         data: config.data,
+            //     });
+            // }
 
             return config;
         },
@@ -94,13 +94,13 @@ export const setupInterceptors = (axiosInstance: AxiosInstance): void => {
     axiosInstance.interceptors.response.use(
         (response: AxiosResponse) => {
             // Log response (chỉ trong dev)
-            if (__DEV__) {
-                console.log('API Response:', {
-                    url: response.config.url,
-                    status: response.status,
-                    data: response.data,
-                });
-            }
+            // if (__DEV__) {
+            //     console.log('API Response:', {
+            //         url: response.config.url,
+            //         status: response.status,
+            //         data: response.data,
+            //     });
+            // }
 
             return response;
         },
@@ -108,14 +108,14 @@ export const setupInterceptors = (axiosInstance: AxiosInstance): void => {
             const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
             // Log error (chỉ trong dev)
-            if (__DEV__) {
-                console.error('API Error:', {
-                    url: originalRequest?.url,
-                    status: error.response?.status,
-                    message: error.message,
-                    data: error.response?.data,
-                });
-            }
+            // if (__DEV__) {
+            //     console.error('API Error:', {
+            //         url: originalRequest?.url,
+            //         status: error.response?.status,
+            //         message: error.message,
+            //         data: error.response?.data,
+            //     });
+            // }
 
             // Xử lý token hết hạn (401)
             if (error.response?.status === 401 && originalRequest && !originalRequest._retry) {

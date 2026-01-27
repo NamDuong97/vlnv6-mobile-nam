@@ -43,5 +43,8 @@ export const API_ENDPOINTS = {
 
     //Citys
     CITIES: '/job/v1/cities/config',
+
+    // PageMeta
+    GETPAGEMETA: '/listing/v1/jobfilters/values?category_id=2&subcategory_id=3'
 } as const;
 

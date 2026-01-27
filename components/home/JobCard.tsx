@@ -59,11 +59,15 @@ export const JobCard: React.FC<JobCardProps> = ({ job, isHot, onPress }) => {
               >
                 {job.company_name || ''}
               </Text>
-              <Image
+              {
+                job.org_level >2 &&
+                <Image
                 source={require('@/assets/images/verify-green.svg')}
                 style={{ width: 16, height: 16, marginLeft: 2 }}
                 contentFit='cover'
               />
+              }
+          
             </View>
           }
         </View>

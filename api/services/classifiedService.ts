@@ -10,7 +10,6 @@ export const classifiedService = {
             API_ENDPOINTS.CLASSIFIED_FEATURED,
             params
         );
-        console.log("hot job goc: ", response)
         return response;
     },
 
