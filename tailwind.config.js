@@ -28,7 +28,13 @@ module.exports = {
           200: '#212325',
           100: 'rgb(100, 100, 109)',
           50: 'rgb(49 49 75)',
+        },
+        greenx: {
+          200: 'rgb(87, 190, 131)',
+          100: 'rgb(242, 251 246)',
+          300: 'rgb(7, 137, 89)'
         }
+
       },
       fontFamily: {
         // Định nghĩa các font family

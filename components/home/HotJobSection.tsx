@@ -66,7 +66,7 @@ const HotJobSection = () => {
                 </ImageBackground>
             </View>
 
-            <View className="bg-white px-4 mt-5">
+            <View className="bg-white gap-4 px-4 py-6">
                 {displayJobs.map((job: UnifiedJobItem) => (
                     <JobCard
                         key={job.id}

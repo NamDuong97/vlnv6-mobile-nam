@@ -11,7 +11,7 @@ const LastestJobSection = () => {
     const latestJobs = useLatestJobs();
     const loading = useClassifiedLoading();
     const error = useClassifiedError();
-    const totalLatestJobs =  useTotalLatestJobs();
+    const totalLatestJobs = useTotalLatestJobs();
     const fetchLatestJobs = useClassifiedStore(state => state.fetchLatestJobs);
 
     // Fetch data khi component mount
@@ -60,7 +60,7 @@ const LastestJobSection = () => {
 
     return (
         <View className="bg-white my-1.5 px-4 py-5">
-            <View className="flex-row items-center mb-3">
+            <View className="flex-row items-center mb-3 pb-5">
                 <Image
                     source={require('@/assets/images/job-latest-icon-home.svg')}
                     style={{ width: 24, height: 24, marginRight: 4 }}
@@ -68,12 +68,14 @@ const LastestJobSection = () => {
                 <Text className="text-lg font-bold text-gray-800">Việc làm mới nhất</Text>
             </View>
 
-            {displayJobs.map((job: UnifiedJobItem) => (
-                <JobCard
-                    key={job.id}
-                    job={job}
-                    onPress={() => console.log('Job pressed:', job.title)} isHot={false}                />
-            ))}
+            <View className='gap-2 bottom-4'>
+                {displayJobs.map((job: UnifiedJobItem) => (
+                    <JobCard
+                        key={job.id}
+                        job={job}
+                        onPress={() => console.log('Job pressed:', job.title)} isHot={false} />
+                ))}
+            </View>
 
             {/* Loading indicator khi đang refresh (nếu đã có data) */}
             {loading && latestJobs.length > 0 && (

@@ -11,21 +11,34 @@ interface JobCardProps {
 }
 
 export const JobCard: React.FC<JobCardProps> = ({ job, isHot, onPress }) => {
+  const isUrgent = job.service_ids.includes(7008);
+
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.85} className="bg-white rounded-xl border border-gray-200 p-3 mb-4 relative">
-      {isHot && <ImageBackground
-        source={require('@/assets/images/special-home-bg-v2.png')}
-        className="absolute flex-row items-center justify-center rounded-t-2xl w-28 h-10 bottom-0 right-0 pl-3 pt-4"
-        resizeMode="cover"
-      >
-        <Image
-          source={require('@/assets/images/special-job.svg')}
-          style={{ width: 16, height: 16, marginLeft: 5, marginRight: 3 }}
-          contentFit='contain'
-        />
-        <Text className="text-sm font-bold text-white">Top Ads</Text>
-      </ImageBackground>
-      }
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.85}
+      className={`${isUrgent && !isHot ? 'bg-greenx-100 border-greenx-200' : 'bg-white border-gray-200'} rounded-lg border p-3 relative`}>
+
+      {/* Top Ads Badge */}
+      {isHot && (
+        <View
+          className="absolute w-28 h-10 bottom-0 right-0 overflow-hidden"
+          style={{ borderBottomRightRadius: 7 }}
+        >
+          <ImageBackground
+            source={require('@/assets/images/special-home-bg-v2.png')}
+            className="flex-1 flex-row items-center justify-center pl-3 pt-4"
+            resizeMode="cover"
+          >
+            <Image
+              source={require('@/assets/images/special-job.svg')}
+              style={{ width: 16, height: 16, marginLeft: 5, marginRight: 3 }}
+              resizeMode="contain"
+            />
+            <Text className="text-sm font-bold text-white">Top Ads</Text>
+          </ImageBackground>
+        </View>
+      )}
 
       {/* ROW 1: LOGO + TITLE */}
       <View className="flex-row gap-2">
@@ -60,14 +73,13 @@ export const JobCard: React.FC<JobCardProps> = ({ job, isHot, onPress }) => {
                 {job.company_name || ''}
               </Text>
               {
-                job.org_level >2 &&
+                job.org_level > 2 &&
                 <Image
-                source={require('@/assets/images/verify-green.svg')}
-                style={{ width: 16, height: 16, marginLeft: 2 }}
-                contentFit='cover'
-              />
+                  source={require('@/assets/images/verify-green.svg')}
+                  style={{ width: 16, height: 16, marginLeft: 2 }}
+                  contentFit='cover'
+                />
               }
-          
             </View>
           }
         </View>
@@ -88,13 +100,27 @@ export const JobCard: React.FC<JobCardProps> = ({ job, isHot, onPress }) => {
           <Text className="text-xs text-black-700">{job.location}</Text>
         </View>
 
-        <View className="flex-row items-center">
-          <Image
-            source={require('@/assets/images/clock-black.svg')}
-            style={{ width: 16, height: 16, marginRight: 2 }}
-            contentFit="cover"
-          />
-          <Text className="text-xs text-black-700">{job.publish_display}</Text>
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row items-center">
+            <Image
+              source={require('@/assets/images/clock-black.svg')}
+              style={{ width: 16, height: 16, marginRight: 2 }}
+              contentFit="cover"
+            />
+            <Text className="text-xs text-black-700">{job.publish_display}</Text>
+          </View>
+
+          {/* Tuyển Gấp Badge - only show if not isHot to avoid overlap */}
+          {isUrgent && !isHot && (
+            <View className="right-0 bg-greenx-300 rounded-lg px-2 gap-[2px] py-[2px] flex-row items-center">
+              <Text className="text-xs font-bold text-white leading-5">Tuyển gấp</Text>
+              <Image
+                source={require('@/assets/images/urgent-job-v2.svg')}
+                style={{ width: 14, height: 16 }}
+                contentFit='contain'
+              />
+            </View>
+          )}
         </View>
       </View>
     </TouchableOpacity>

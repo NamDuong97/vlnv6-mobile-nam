@@ -53,7 +53,7 @@ const NewsOfCompanySection = () => {
 
     return (
         <View className="bg-white my-4 px-4 py-5">
-            <View className="flex-row items-center mb-3">
+            <View className="flex-row items-center mb-3 pb-5">
                 <Image
                     source={require('@/assets/images/business-latest-icon-home.svg')}
                     style={{ width: 24, height: 24, marginRight: 4 }}
@@ -62,17 +62,19 @@ const NewsOfCompanySection = () => {
             </View>
 
             {/* Danh sách jobs */}
-            {displayJobs.map((job: UnifiedJobItem) => (
-                <JobCard
-                    key={job.id}
-                    job={job}
-                    isHot={false}
-                    onPress={() => {
-                        console.log("Xem tất cả tin doanh nghiệp");
-                        // navigation.navigate('AllCompanyJobs');
-                    }}
-                />
-            ))}
+            <View className='gap-2 bottom-4'>
+                {displayJobs.map((job: UnifiedJobItem) => (
+                    <JobCard
+                        key={job.id}
+                        job={job}
+                        isHot={false}
+                        onPress={() => {
+                            console.log("Xem tất cả tin doanh nghiệp");
+                            // navigation.navigate('AllCompanyJobs');
+                        }}
+                    />
+                ))}
+            </View>
 
             {/* Loading indicator khi đang refresh (nếu đã có data) */}
             {loading && companyJobs.length > 0 && (
