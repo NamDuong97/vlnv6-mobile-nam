@@ -9,7 +9,6 @@ interface CompanyCardProps {
 }
 
 export const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
-  console.log("company ", company);
   return (
     <TouchableOpacity
       onPress={() => console.log('Da bam vao component companycard')}

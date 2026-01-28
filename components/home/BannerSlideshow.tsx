@@ -1,56 +1,50 @@
+import { useBannerError, useBannerLoading, useBannerStore, useHomeBanners } from '@/store/bannerStore';
+import { Banner } from '@/types/banner';
 import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, FlatList, Image, NativeScrollEvent, NativeSyntheticEvent, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Dimensions, FlatList, Image, NativeScrollEvent, NativeSyntheticEvent, Text, TouchableOpacity, View } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
-// Interface cho Banner object
-export interface Banner {
-    id: string;
-    image: string;
-    link?: string;
-    title?: string;
-}
-
 // Props interface
 interface BannerSlideshowProps {
-    banners?: Banner[];
     autoPlayInterval?: number;
     onBannerPress?: (banner: Banner) => void;
 }
 
-// Dữ liệu mẫu - có thể thay thế bằng API sau này
-const SAMPLE_BANNERS: Banner[] = [
-    {
-        id: '1',
-        image: 'https://cloud.muaban.net/cdn-cgi/image/width=640,quality=85,format=auto/banners/2025/11/12/233/e740aa2d4fe248feb04f9e6e22267477.png',
-        link: 'https://example.com/banner1',
-        title: 'Banner 1',
-    },
-    {
-        id: '2',
-        image: 'https://blogcdn.vieclam.net/blog/wp-content/uploads/2025/03/25145423/Thumbnail-wiki-1-1.jpg',
-        link: 'https://example.com/banner2',
-        title: 'Banner 2',
-    },
-    {
-        id: '3',
-        image: 'https://blogcdn.vieclam.net/blog/wp-content/uploads/2025/10/08144505/Thumbnail-wiki-4.jpg',
-        link: 'https://example.com/banner3',
-        title: 'Banner 3',
-    },
-];
+const BannerSlideshow: React.FC<BannerSlideshowProps> = ({ autoPlayInterval = 3000, onBannerPress }) => {
 
-const BannerSlideshow: React.FC<BannerSlideshowProps> = ({ banners = SAMPLE_BANNERS, autoPlayInterval = 3000, onBannerPress }) => {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const flatListRef = useRef<FlatList<Banner>>(null);
+    const storeBanners = useHomeBanners();
+    const loading = useBannerLoading();
+    const error = useBannerError();
+    const { fetchHomeBanners, bannerHydrate } = useBannerStore();
+
+    useEffect(() => {
+        const initializeBanners = async () => {
+            try {
+                // Hydrate từ storage trước
+                await bannerHydrate();
+
+                // Nếu không có data trong store hoặc cần refresh
+                if (storeBanners.length === 0) {
+                    await fetchHomeBanners();
+                }
+            } catch (error) {
+                console.error('Failed to initialize banners:', error);
+            }
+        };
+
+        initializeBanners();
+    }, []);
 
     // Auto-play slideshow
     useEffect(() => {
-        if (banners.length <= 1) return;
+        if (storeBanners.length <= 1) return;
 
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) => {
-                const nextIndex = (prevIndex + 1) % banners.length;
+                const nextIndex = (prevIndex + 1) % storeBanners.length;
 
                 flatListRef.current?.scrollToIndex({
                     index: nextIndex,
@@ -62,7 +56,7 @@ const BannerSlideshow: React.FC<BannerSlideshowProps> = ({ banners = SAMPLE_BANN
         }, autoPlayInterval);
 
         return () => clearInterval(interval);
-    }, [banners.length, autoPlayInterval]);
+    }, [storeBanners, autoPlayInterval]);
 
     const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
         const scrollPosition = event.nativeEvent.contentOffset.x;
@@ -84,13 +78,13 @@ const BannerSlideshow: React.FC<BannerSlideshowProps> = ({ banners = SAMPLE_BANN
             style={{ width }}
         >
             <Image
-                source={{ uri: item.image }}
-                className="w-full h-48"
+                source={{ uri: item.media_mobile_url }}
+                className="w-full h-56 object-cover"
                 resizeMode="cover"
             />
-            {banners.length > 1 && (
+            {storeBanners.length > 1 && (
                 <View className="absolute bottom-3 left-0 right-0 flex-row justify-center items-center">
-                    {banners.map((_, index) => (
+                    {storeBanners.map((_, index) => (
                         <View
                             key={index}
                             className={`h-2 rounded-full mx-1 ${index === currentIndex
@@ -104,14 +98,37 @@ const BannerSlideshow: React.FC<BannerSlideshowProps> = ({ banners = SAMPLE_BANN
         </TouchableOpacity>
     );
 
+    // Hiển thị loading state
+    if (loading && storeBanners.length === 0) {
+        return (
+            <View className="w-full h-48 justify-center items-center bg-gray-100">
+                <ActivityIndicator size="large" color="#000" />
+            </View>
+        );
+    }
+
+    // Hiển thị error state
+    if (error && storeBanners?.length === 0) {
+        return (
+            <View className="w-full h-48 justify-center items-center bg-gray-100">
+                <Text className="text-red-500">Failed to load banners</Text>
+            </View>
+        );
+    }
+
+    // Không có banners
+    if (storeBanners.length === 0) {
+        return null;
+    }
+
     return (
         <View className="w-full">
             <FlatList
                 ref={flatListRef}
-                data={banners}
+                data={storeBanners}
                 renderItem={renderBanner}
-                keyExtractor={(item) => item.id}
-                horizontal //cho danh sách nằm ngang
+                keyExtractor={(item) => String(item.id)}
+                horizontal
                 pagingEnabled
                 showsHorizontalScrollIndicator={false}
                 onScroll={handleScroll}

@@ -1,4 +1,5 @@
 // src/hooks/useBootstrap.ts
+import { useBannerStore } from '@/store/bannerStore';
 import { useCityStore } from '@/store/cityStore';
 import { useClassifiedStore } from '@/store/classifiedStore';
 import { useBootstrapStore } from '@/store/indexStore';
@@ -16,6 +17,8 @@ export const useBootstrap = () => {
     const classifiedRefresh = useClassifiedStore(state => state.classifiedRefresh)
     const pageMetaHydrate = usePageMetaStore(state => state.pageMetaHydrate)
     const pageMetaRefresh = usePageMetaStore(state => state.pageMetaRefresh)
+    const bannerHydrate = useBannerStore(state => state.bannerHydrate)
+    const bannerRefresh = useBannerStore(state => state.bannerRefresh)
 
     useEffect(() => {
         const init = async () => {
@@ -24,6 +27,7 @@ export const useBootstrap = () => {
                 orgHydrate(),
                 classifiedHydrate(),
                 pageMetaHydrate(),
+                bannerHydrate(),
             ])
 
             setReady()
@@ -32,7 +36,8 @@ export const useBootstrap = () => {
                 cityRefresh(),
                 orgRefresh(),
                 classifiedRefresh(),
-                pageMetaRefresh()
+                pageMetaRefresh(),
+                bannerRefresh(),
             ])
         }
         init()
