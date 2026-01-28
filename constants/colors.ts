@@ -1,4 +1,3 @@
-
 const lightTheme = {
   primary: "#2563EB",
   primaryLight: "#60A5FA",

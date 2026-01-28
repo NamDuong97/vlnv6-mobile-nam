@@ -1,5 +1,4 @@
 // types/classified.ts
-
 import { PaginationParams } from ".";
 
 export interface JobOrg {
@@ -39,7 +38,7 @@ export interface ClassifiedItem {
   is_expired: boolean;
 }
 
-// Interface cho response từ API
+// Interface cho response từ API cho tin nổi bật
 export interface ClassifiedListResponse {
   has_next: boolean;
   total: number;
@@ -58,7 +57,7 @@ export interface GetClassifiedsParams extends PaginationParams {
   org_id?: number;
 }
 
-// type cho việc làm của công ty
+// type cho item việc làm của công ty
 export interface JobByCompanyItem {
   id: number;
   user_id: number;
@@ -92,13 +91,13 @@ export interface JobByCompanyItem {
   is_company: boolean;
 }
 
-// Interface cho response từ API
+// Interface cho response từ API cho tin từ doanh nghiệp
 export interface JobByCompanyListResponse {
   total: number;
   items: JobByCompanyItem[];
 }
 
-// type cho việc làm mới nhất
+// type cho item việc làm mới nhất
 export interface LatestJobItem {
   id: number;
   user_id: number;
@@ -141,7 +140,7 @@ export interface LatestJobItem {
   company_image?: string;
 }
 
-// Interface cho response từ API
+// Interface cho response từ API cho tin mới nhất
 export interface LatestJobListResponse {
   total: number;
   items: LatestJobItem[];

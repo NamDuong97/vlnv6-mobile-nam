@@ -28,8 +28,7 @@ interface OrgState {
     fetchOrganizationOutstanding: () => Promise<void>;
 }
 
-const STORAGE_KEY = 'ORGANIZATIONS';
-const CACHE_DURATION = 5 * 60 * 1000;
+const STORAGE_KEY = 'ORG_OUTSTANDING';
 
 export const useOrgStore = create<OrgState>((set, get) => ({
     orgsMap: {},
@@ -74,8 +73,7 @@ export const useOrgStore = create<OrgState>((set, get) => ({
     },
 
     orgHydrate: async () => {
-        let key = 'ORG_OUTSTANDING'
-        const response = await storage.get<OrganizationListResponse>(key);
+        const response = await storage.get<OrganizationListResponse>(STORAGE_KEY);
         const orgsOutstanding = response?.items;
         if (orgsOutstanding) {
             set({ orgsOutstanding: orgsOutstanding })
@@ -85,13 +83,12 @@ export const useOrgStore = create<OrgState>((set, get) => ({
 
     orgRefresh: async () => {
         try {
-            let key = 'ORG_OUTSTANDING'
             const response = await orgService.getOrganizationsOutstanding();
             const orgsOutstanding = response?.items;
             if (orgsOutstanding) {
                 set({ orgsOutstanding: orgsOutstanding, loading: false, error: null })
             }
-            await storage.set(key, orgsOutstanding);
+            await storage.set(STORAGE_KEY, orgsOutstanding);
         } catch (e) {
             console.warn('Fetch organizations failed', e);
         }
@@ -119,7 +116,7 @@ export const useOrgStore = create<OrgState>((set, get) => ({
     },
 }));
 
-// SELECTORS
+// Selectors Basic
 export const useOrgsMap = () => useOrgStore(state => state.orgsMap);
 export const useOrgsList = () => useOrgStore(state => state.orgsList);
 export const useOrgsOutstanding = () => useOrgStore(state => state.orgsOutstanding);
@@ -130,7 +127,7 @@ export const useOrgInitialized = () => useOrgStore(state => state.initialized);
 export const useOrgHydrated = () => useOrgStore(state => state.hydrated);
 export const useTotalOrgs = () => useOrgStore(state => state.total);
 
-// Enhanced selectors
+// Custom selectors
 export const useOrgSelectors = () => {
     const store = useOrgStore();
 

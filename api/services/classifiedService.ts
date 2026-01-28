@@ -1,7 +1,7 @@
 // api/services/classifiedService.ts
 import { API_ENDPOINTS } from '@/api/config/apiConstants';
 import { apiGet, withErrorHandling } from '@/api/config/axiosClient';
-import { ClassifiedItem, ClassifiedListResponse, GetClassifiedsParams, JobByCompanyListResponse, LatestJobListResponse } from '@/types/classified';
+import { ClassifiedListResponse, GetClassifiedsParams, JobByCompanyListResponse, LatestJobListResponse } from '@/types/classified';
 
 export const classifiedService = {
     // Việc làm nổi bật
@@ -27,23 +27,6 @@ export const classifiedService = {
         const response = await apiGet<JobByCompanyListResponse>(
             API_ENDPOINTS.CLASSIFIED_COMPANY,
             params
-        );
-        return response;
-    },
-
-    // Chi tiết công việc
-    getJobDetail: async (id: number): Promise<ClassifiedItem> => {
-        const response = await apiGet<ClassifiedItem>(
-            `/job/v1/jobs/${id}`
-        );
-        return response;
-    },
-
-    // Tìm kiếm việc làm
-    searchJobs: async (query: string, params?: GetClassifiedsParams): Promise<ClassifiedListResponse> => {
-        const response = await apiGet<ClassifiedListResponse>(
-            '/job/v1/jobs/search',
-            { ...params, q: query }
         );
         return response;
     },

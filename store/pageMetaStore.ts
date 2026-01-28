@@ -7,22 +7,22 @@ import { create } from 'zustand';
 interface PageMetaState {
   // Current page meta
   currentMeta: PageMetaResponse | null;
-  
+
   // Cached metas by key (url hoặc category id)
   cachedMetas: Map<string, PageMetaResponse>;
-  
+
   // UI states
   loading: boolean;
   error: string | null;
-  
+
   // Actions
   setCurrentMeta: (meta: PageMetaResponse) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
-  
+
   fetchPageMeta: (params?: GetPageMetaParams) => Promise<void>;
   clearCache: () => void;
-  
+
   // Storage
   pageMetaHydrate: () => Promise<void>;
   pageMetaRefresh: () => Promise<void>;
@@ -45,7 +45,7 @@ export const usePageMetaStore = create<PageMetaState>((set, get) => ({
     if (key) {
       newCachedMetas.set(key, meta);
     }
-    
+
     set({
       currentMeta: meta,
       cachedMetas: newCachedMetas
@@ -62,10 +62,10 @@ export const usePageMetaStore = create<PageMetaState>((set, get) => ({
     try {
       const meta = await pageMetaService.getJobPageMeta(params);
       get().setCurrentMeta(meta);
-      
-      set({ 
-        loading: false, 
-        error: null 
+
+      set({
+        loading: false,
+        error: null
       });
     } catch (error: any) {
       set({
@@ -103,7 +103,7 @@ export const usePageMetaStore = create<PageMetaState>((set, get) => ({
       };
 
       await get().fetchPageMeta(params);
-      
+
       // Lưu cache
       if (currentMeta.key) {
         await storage.set(STORAGE_KEY, currentMeta);
@@ -114,22 +114,22 @@ export const usePageMetaStore = create<PageMetaState>((set, get) => ({
   },
 }));
 
-// SELECTORS
+// Selectors Basic
 export const useCurrentPageMeta = () => usePageMetaStore(state => state.currentMeta);
 export const usePageMetaLoading = () => usePageMetaStore(state => state.loading);
 export const usePageMetaError = () => usePageMetaStore(state => state.error);
 
-// Enhanced selectors
+// Custom selectors
 export const usePageMetaSelectors = () => {
   const store = usePageMetaStore();
 
   return {
     // Get active filter
     getActiveFilter: () => store.currentMeta?.filters?.category_id,
-    
+
     // Get breadcrumbs
     getBreadcrumbs: () => store.currentMeta?.breadcrumbs || [],
-    
+
     // Get SEO data
     getSEOData: () => store.currentMeta?.seo,
   };

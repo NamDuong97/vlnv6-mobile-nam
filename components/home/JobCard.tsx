@@ -33,7 +33,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, isHot, onPress }) => {
             <Image
               source={require('@/assets/images/special-job.svg')}
               style={{ width: 16, height: 16, marginLeft: 5, marginRight: 3 }}
-              resizeMode="contain"
+              contentFit="contain"
             />
             <Text className="text-sm font-bold text-white">Top Ads</Text>
           </ImageBackground>

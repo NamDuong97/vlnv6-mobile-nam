@@ -205,10 +205,6 @@ export const useClassifiedStore = create<ClassifiedState>((set, get) => ({
                 classifiedService.getLatestJobs(),
                 classifiedService.getCompanyJobs()
             ]);
-            
-            console.log("so tin tu doanh nghiep: ", companyResponse.total)
-            console.log("so tin moi nhat: ", latestResponse.total)
-            console.log("so tin noi bat: ", featuredResponse.total)
 
             const data1 = featuredResponse.items.map(item => mapClassifiedToUnified(item))
             const data2 = latestResponse.items.map(item => mapLatestJobToUnified(item))
@@ -230,8 +226,8 @@ export const useClassifiedStore = create<ClassifiedState>((set, get) => ({
                 loading: false,
                 error: null,
                 totalFeaturedJobs: featuredResponse.total,
-                totalLatestJobs : latestResponse.total,
-                totalCompanyJobs : companyResponse.total
+                totalLatestJobs: latestResponse.total,
+                totalCompanyJobs: companyResponse.total
             });
         } catch (e) {
             console.warn('Fetch classifieds failed', e);
@@ -243,7 +239,7 @@ export const useClassifiedStore = create<ClassifiedState>((set, get) => ({
     },
 }));
 
-// SELECTORS
+// Selectors Basic
 export const useFeaturedJobs = () => useClassifiedStore(state => state.featuredJobs);
 export const useLatestJobs = () => useClassifiedStore(state => state.latestJobs);
 export const useCompanyJobs = () => useClassifiedStore(state => state.companyJobs);
@@ -255,7 +251,7 @@ export const useTotalFeaturedJobs = () => useClassifiedStore(state => state.tota
 export const useTotalLatestJobs = () => useClassifiedStore(state => state.totalLatestJobs);
 export const useTotalCompanyJobs = () => useClassifiedStore(state => state.totalCompanyJobs);
 
-// Enhanced selectors
+// Custom selectors
 export const useClassifiedSelectors = () => {
     const store = useClassifiedStore();
 

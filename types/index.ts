@@ -1,4 +1,4 @@
-
+// types/index.ts - type chung cho toàn dự án
 export interface Company {
   id: string;
   name: string;
@@ -13,16 +13,6 @@ export interface Tag {
   name: string;
   icon?: string;
 }
-
-// Định nghĩa các key hợp lệ
-export type IconKey =
-  | 'job-tet'
-  | 'ban-hang-tai-quay'
-  | 'tai-xe-lai-xe'
-  | 'giao-cho-hang'
-  | 'giup-viec-tap-vu'
-  | 'tat-ca-nganh';
-
 
 // Types cho API response
 export interface ApiResponse<T = any> {

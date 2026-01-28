@@ -15,7 +15,7 @@ import '../global.css';
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  // ✅ GỌI Ở ĐÂY
+  // Bootstrap để call api master hiển thị giao diện homepage
   useBootstrap();
 
   const [fontsLoaded, fontError] = useFonts({
@@ -67,7 +67,6 @@ function RootLayoutNav() {
           headerShown: true,
           title: 'Modal',
         }} />
-        <Stack.Screen name="news" options={{ headerShown: false }} />
       </Stack>
     </View>
   );

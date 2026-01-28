@@ -24,7 +24,6 @@ export const useBootstrap = () => {
                 orgHydrate(),
                 classifiedHydrate(),
                 pageMetaHydrate(),
-                // categoryHydrate()
             ])
 
             setReady()
@@ -34,10 +33,8 @@ export const useBootstrap = () => {
                 orgRefresh(),
                 classifiedRefresh(),
                 pageMetaRefresh()
-                // categoryRefresh()
             ])
         }
-
         init()
     }, [])
 }

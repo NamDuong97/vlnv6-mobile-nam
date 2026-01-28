@@ -1,10 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-    AxiosError,
-    AxiosInstance,
-    AxiosResponse,
-    InternalAxiosRequestConfig,
-} from 'axios';
+import { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { API_ENDPOINTS } from './apiConstants';
 import { getAuthToken } from './axiosClient';
 
@@ -41,7 +36,6 @@ const processQueue = (error: any, token: string | null = null): void => {
     failedQueue = [];
 };
 
-
 // Helper function để lấy refresh token
 export const getRefreshToken = async (): Promise<string | null> => {
     try {
@@ -58,7 +52,6 @@ export const setupInterceptors = (axiosInstance: AxiosInstance): void => {
     // REQUEST INTERCEPTOR
     axiosInstance.interceptors.request.use(
         async (config: InternalAxiosRequestConfig) => {
-
             // Thêm timestamp để tránh cache
             if (config.method?.toLowerCase() === 'get' && config.params) {
                 config.params = {
@@ -106,7 +99,6 @@ export const setupInterceptors = (axiosInstance: AxiosInstance): void => {
         },
         async (error: AxiosError<ErrorResponseData>) => {
             const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
-
             // Log error (chỉ trong dev)
             // if (__DEV__) {
             //     console.error('API Error:', {

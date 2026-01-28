@@ -35,7 +35,6 @@ interface CityState {
 }
 
 const STORAGE_KEY = 'CITIES'
-const CACHE_DURATION = 5 * 60 * 1000;
 
 export const useCityStore = create<CityState>((set, get) => ({
     citiesMap: {},
@@ -48,7 +47,6 @@ export const useCityStore = create<CityState>((set, get) => ({
     loading: false,
     error: null,
     initialized: false,
-
 
     setCitiesMap: (citiesMap) => {
         // Tính toán derived data khi set citiesMap
@@ -199,7 +197,7 @@ export const useCityStore = create<CityState>((set, get) => ({
     }
 }));
 
-// SELECTOR
+// Selectors Basic
 export const useCitiesMap = () => useCityStore(state => state.citiesMap);
 export const useProvinces = () => useCityStore(state => state.provinces);
 export const useProvincesWithoutWholeCountry = () =>
@@ -213,7 +211,7 @@ export const useCityError = () => useCityStore(state => state.error);
 export const useCityInitialized = () => useCityStore(state => state.initialized);
 export const useCityHydrated = () => useCityStore(state => state.hydrated);
 
-// Enhanced selectors
+// Custom selectors
 export const useCitySelectors = () => {
     const store = useCityStore();
 
