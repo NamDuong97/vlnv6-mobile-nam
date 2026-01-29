@@ -8,8 +8,8 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import '../global.css';
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import '../../global.css';
 
 // Prevent splash screen auto-hiding
 SplashScreen.preventAutoHideAsync();
@@ -46,7 +46,11 @@ export default function RootLayout() {
     return <AppSplash />
   }
 
-  return <RootLayoutNav />;
+  return (
+    <SafeAreaProvider>
+      <RootLayoutNav />
+    </SafeAreaProvider>
+  );
 }
 
 function RootLayoutNav() {

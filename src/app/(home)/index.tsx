@@ -16,7 +16,6 @@ import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   const [isPressPostButton, setIsPressPostButton] = useState(false);
@@ -29,15 +28,11 @@ export default function HomeScreen() {
 
   const handlePressPostButton = () => {
     setIsPressPostButton(true);
-    router.push('/news/create')
-  }
-
-  const handlePressLoadMore = () => {
-    setIsLoadMore(!isLoadMore);
+    router.push('/')
   }
 
   return (
-    <SafeAreaProvider className="flex-1 bg-gray-50">
+    <View className="flex-1 bg-gray-50">
       <StatusBar style="dark" />
       <Header />
 
@@ -87,6 +82,6 @@ export default function HomeScreen() {
         ?
         (<FixedFooter onPress={handlePressPostButton} onClose={handleClosePostModal} isClosePostModal={isClosePostModal} />) : ''
       }
-    </SafeAreaProvider>
+    </View>
   );
 }

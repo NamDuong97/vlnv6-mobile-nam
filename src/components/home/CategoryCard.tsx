@@ -18,12 +18,7 @@ const SPRITE_CONFIG = {
   iconSize: 42,
 };
 
-export const CategoryCard: React.FC<CategoryCardProps> = ({
-  category,
-  onPress
-}) => {
-  const isHot = category.is_hot || category.hot;
-
+export const CategoryCard: React.FC<CategoryCardProps> = ({ category, onPress }) => {
   // Detect xem icon_pos là grid hay pixel
   const detectPositionType = () => {
     const x = parseInt(category.icon_pos.x);

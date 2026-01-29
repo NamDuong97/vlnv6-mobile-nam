@@ -4,7 +4,7 @@ import { apiGet, withErrorHandling } from '@/api/config/axiosClient';
 import { CitiesResponse } from '@/types/city';
 
 export const cityService = {
-    // Lấy tất cả cities (format map)
+    // Lấy tất cả cities 
     getAllCities: async (): Promise<CitiesResponse> => {
         return apiGet<CitiesResponse>(API_ENDPOINTS.CITIES);
     },

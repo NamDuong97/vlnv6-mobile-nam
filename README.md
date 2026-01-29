@@ -15,92 +15,97 @@ VLNV6 Mobile là ứng dụng tìm kiếm việc làm cho phép người dùng:
 ```
 vlnv6-mobile/
 │
-├── api/                          # Lớp API và services
-│   ├── config/                   # Cấu hình API
-│   │   ├── apiConstants.ts       # Các hằng số API (endpoints, keys)
-│   │   ├── axiosClient.ts        # Cấu hình Axios client
-│   │   └── interceptors.ts       # Request/Response interceptors
-│   └── services/                 # Các service gọi API
-│       ├── cityService.ts        # Service quản lý dữ liệu thành phố
-│       ├── classifiedService.ts  # Service tin đăng tuyển dụng
-│       ├── orgService.ts         # Service thông tin doanh nghiệp
-│       └── pageMetaService.ts    # Service metadata trang
-│
-├── app/                          # Expo Router - Screens và routing
-│   ├── (auth)/                   # Group màn hình xác thực
-│   │   ├── sign-in.tsx           # Màn hình đăng nhập
-│   │   ├── sign-up.tsx           # Màn hình đăng ký
-│   │   └── _layout.tsx           # Layout cho auth group
-│   ├── (home)/                   # Group màn hình chính
-│   │   ├── index.tsx             # Màn hình trang chủ
-│   │   └── _layout.tsx           # Layout cho home group
-│   ├── _layout.tsx               # Root layout của app
-│   ├── +not-found.tsx            # Màn hình 404
-│   └── modal.tsx                 # Modal component
-│
-├── components/                   # React components
-│   ├── common/                   # Components dùng chung
-│   │   ├── AppSplash.tsx         # Màn hình splash
-│   │   ├── Footer.tsx            # Footer component
-│   │   └── Header.tsx            # Header component
-│   └── home/                     # Components cho trang chủ
-│       ├── BannerSlideshow.tsx   # Slideshow banner
-│       ├── BenefitsSection.tsx   # Section hiển thị lợi ích
-│       ├── CategoryCard.tsx      # Card hiển thị danh mục
-│       ├── CategorySection.tsx   # Section danh mục nghề nghiệp
-│       ├── CompanyCard.tsx       # Card thông tin công ty
-│       ├── CompanyInfoSection.tsx # Section thông tin công ty chi tiết
-│       ├── CompanyList.tsx       # Danh sách công ty
-│       ├── CompanySection.tsx    # Section các công ty nổi bật
-│       ├── EmployerSection.tsx   # Section dành cho nhà tuyển dụng
-│       ├── FeatureCard.tsx       # Card tính năng
-│       ├── FilterSection.tsx     # Section bộ lọc tìm kiếm
-│       ├── FixedFooter.tsx       # Footer cố định
-│       ├── HotJobCard.tsx        # Card việc làm hot
-│       ├── HotJobSection.tsx     # Section việc làm nổi bật
-│       ├── JobCard.tsx           # Card việc làm
-│       ├── LastestJobSection.tsx # Section việc làm mới nhất
-│       ├── LocaltionPickerModal.tsx # Modal chọn địa điểm
-│       ├── NewsOfCompanySection.tsx # Section tin tức công ty
-│       └── Tag.tsx               # Component tag/nhãn
-│
-├── constants/                    # Hằng số và cấu hình
-│   └── colors.ts                 # Bảng màu của app
-│
-├── hooks/                        # Custom React hooks
-│   ├── useBootstrap.ts           # Hook khởi tạo app (fonts, data)
-│   └── useTheme.ts               # Hook quản lý theme
-│
-├── store/                        # Zustand stores - State management
-│   ├── cityStore.ts              # Store quản lý dữ liệu thành phố
-│   ├── classifiedStore.ts        # Store quản lý tin đăng
-│   ├── indexStore.ts             # Store chung/index
-│   ├── orgStore.ts               # Store quản lý doanh nghiệp
-│   └── pageMetaStore.ts          # Store quản lý page metadata
-│
-├── types/                        # TypeScript type definitions
-│   ├── city.ts                   # Types cho thành phố
-│   ├── classified.ts             # Types cho tin đăng
-│   ├── index.ts                  # Export types
-│   ├── org.ts                    # Types cho doanh nghiệp
-│   └── pageMeta.ts               # Types cho page metadata
-│
-├── utils/                        # Utility functions
-│   ├── mappingType.ts            # Functions mapping dữ liệu
-│   └── storage.ts                # AsyncStorage helpers
-│
-├── assets/                       # Tài nguyên tĩnh (hình ảnh, fonts)
+├── src/                          # Thư mục source code chính
+│   │
+│   ├── api/                      # Lớp API và services
+│   │   ├── config/               # Cấu hình API
+│   │   │   ├── apiConstants.ts   # Các hằng số API (endpoints, keys)
+│   │   │   ├── axiosClient.ts    # Cấu hình Axios client
+│   │   │   └── interceptors.ts   # Request/Response interceptors
+│   │   └── services/             # Các service gọi API
+│   │       ├── bannerService.ts  # Service quản lý banner
+│   │       ├── cityService.ts    # Service quản lý dữ liệu thành phố
+│   │       ├── classifiedService.ts # Service tin đăng tuyển dụng
+│   │       ├── orgService.ts     # Service thông tin doanh nghiệp
+│   │       └── pageMetaService.ts # Service metadata trang
+│   │
+│   ├── app/                      # Expo Router - Screens và routing
+│   │   ├── (auth)/               # Group màn hình xác thực
+│   │   │   ├── sign-in.tsx       # Màn hình đăng nhập
+│   │   │   ├── sign-up.tsx       # Màn hình đăng ký
+│   │   │   └── _layout.tsx       # Layout cho auth group
+│   │   ├── (home)/               # Group màn hình chính
+│   │   │   ├── index.tsx         # Màn hình trang chủ
+│   │   │   └── _layout.tsx       # Layout cho home group
+│   │   ├── _layout.tsx           # Root layout của app (SafeAreaProvider)
+│   │   ├── +not-found.tsx        # Màn hình 404
+│   │   └── modal.tsx             # Modal component
+│   │
+│   ├── components/               # React components
+│   │   ├── common/               # Components dùng chung
+│   │   │   ├── AppSplash.tsx     # Màn hình splash
+│   │   │   ├── Footer.tsx        # Footer component
+│   │   │   └── Header.tsx        # Header component
+│   │   └── home/                 # Components cho trang chủ
+│   │       ├── BannerSlideshow.tsx # Slideshow banner
+│   │       ├── BenefitsSection.tsx # Section hiển thị lợi ích
+│   │       ├── CategoryCard.tsx  # Card hiển thị danh mục (sprite sheet)
+│   │       ├── CategorySection.tsx # Section danh mục nghề nghiệp
+│   │       ├── CompanyCard.tsx   # Card thông tin công ty
+│   │       ├── CompanyInfoSection.tsx # Section thông tin công ty chi tiết
+│   │       ├── CompanyList.tsx   # Danh sách công ty
+│   │       ├── CompanySection.tsx # Section các công ty nổi bật
+│   │       ├── EmployerSection.tsx # Section dành cho nhà tuyển dụng
+│   │       ├── FeatureCard.tsx   # Card tính năng
+│   │       ├── FilterSection.tsx # Section bộ lọc tìm kiếm
+│   │       ├── FixedFooter.tsx   # Footer cố định
+│   │       ├── HotJobCard.tsx    # Card việc làm hot
+│   │       ├── HotJobSection.tsx # Section việc làm nổi bật
+│   │       ├── JobCard.tsx       # Card việc làm
+│   │       ├── LastestJobSection.tsx # Section việc làm mới nhất
+│   │       ├── LocaltionPickerModal.tsx # Modal chọn địa điểm
+│   │       ├── NewsOfCompanySection.tsx # Section tin tức công ty
+│   │       └── Tag.tsx           # Component tag/nhãn
+│   │
+│   ├── constants/                # Hằng số và cấu hình
+│   │   └── colors.ts             # Bảng màu của app
+│   │
+│   ├── hooks/                    # Custom React hooks
+│   │   ├── useBootstrap.ts       # Hook khởi tạo app (call API master)
+│   │   └── useTheme.ts           # Hook quản lý theme
+│   │
+│   ├── store/                    # Zustand stores - State management
+│   │   ├── cityStore.ts          # Store quản lý dữ liệu thành phố
+│   │   ├── classifiedStore.ts    # Store quản lý tin đăng
+│   │   ├── indexStore.ts         # Store chung/bootstrap state
+│   │   ├── orgStore.ts           # Store quản lý doanh nghiệp
+│   │   └── pageMetaStore.ts      # Store quản lý page metadata
+│   │
+│   ├── types/                    # TypeScript type definitions
+│   │   ├── city.ts               # Types cho thành phố
+│   │   ├── classified.ts         # Types cho tin đăng
+│   │   ├── index.ts              # Export types
+│   │   ├── org.ts                # Types cho doanh nghiệp
+│   │   └── pageMeta.ts           # Types cho page metadata
+│   │
+│   ├── utils/                    # Utility functions
+│   │   ├── mappingType.ts        # Functions mapping dữ liệu
+│   │   └── storage.ts            # AsyncStorage helpers
+│   │
+│   └── assets/                   # Tài nguyên tĩnh (hình ảnh, fonts)
+│       ├── fonts/                # Custom fonts
+│       └── images/               # Hình ảnh (banner, icons, sprites)
 │
 ├── .env                          # Biến môi trường
 ├── .gitignore                    # Git ignore rules
 ├── app.json                      # Cấu hình Expo app
-├── babel.config.js               # Cấu hình Babel
+├── babel.config.js               # Cấu hình Babel (NativeWind preset)
 ├── expo-env.d.ts                 # Expo type definitions
-├── global.css                    # Global CSS styles
-├── metro.config.js               # Cấu hình Metro bundler
+├── global.css                    # Global CSS styles (Tailwind directives)
+├── metro.config.js               # Cấu hình Metro bundler (NativeWind)
 ├── nativewind-env.d.ts           # NativeWind type definitions
 ├── package.json                  # Dependencies và scripts
-├── tailwind.config.js            # Cấu hình Tailwind CSS
+├── tailwind.config.js            # Cấu hình Tailwind CSS (quét src/**)
 └── tsconfig.json                 # Cấu hình TypeScript
 ```
 
@@ -146,6 +151,11 @@ hoặc
 
 ```bash
 npx expo
+```
+
+khởi động lại Metro bundler và clear cache
+```bash
+npx expo start --clear
 ```
 
 Sau đó bạn có thể chọn:
@@ -229,10 +239,11 @@ npm run web        # Chạy trên web browser
 ### File-based Routing (Expo Router)
 
 Dự án sử dụng Expo Router với file-based routing:
-- Các file trong `app/` tự động tạo thành routes
+- Các file trong `src/app/` tự động tạo thành routes
 - `_layout.tsx` định nghĩa layout cho group
 - `(folder)` là route groups (không ảnh hưởng URL)
 - `+not-found.tsx` là 404 page
+- Root layout (`src/app/_layout.tsx`) wrap app với `SafeAreaProvider`
 
 ### State Management Pattern
 
@@ -240,18 +251,21 @@ Sử dụng Zustand với pattern:
 - Mỗi domain có store riêng (cityStore, orgStore, classifiedStore)
 - Store chứa state + actions
 - Tách biệt business logic khỏi UI components
+- Bootstrap store quản lý trạng thái khởi tạo app
 
 ### API Layer
 
-- **Services**: Các function gọi API (trong `api/services/`)
+- **Services**: Các function gọi API (trong `src/api/services/`)
 - **Axios Client**: Centralized HTTP client với interceptors
 - **Types**: Type-safe với TypeScript definitions
+- **Config**: API constants và base URLs
 
 ### Component Structure
 
-- **Common components**: Dùng chung cho toàn app
-- **Feature components**: Nhóm theo tính năng (home, auth)
+- **Common components**: Dùng chung cho toàn app (`src/components/common/`)
+- **Feature components**: Nhóm theo tính năng (`src/components/home/`, etc.)
 - **Atomic design**: Cards, Sections, Lists
+- Sử dụng NativeWind (Tailwind) cho styling với `className`
 
 ## 🌐 API Endpoints
 
@@ -259,21 +273,46 @@ Dự án kết nối với 2 API servers:
 - **Primary API**: https://sandbox-api.muaban.net
 - **Secondary API**: https://vieclam.net
 
-## 📝 Notes
+## 🐛 Troubleshooting
 
-- Dự án sử dụng **TypeScript** để type-safe
-- **NativeWind** cho phép viết Tailwind CSS trong React Native
-- **Expo Router** tự động tạo TypeScript types cho routes
-- **New Architecture** được enable trong Expo config
+### CSS không hoạt động / Styles không áp dụng
+
+Nếu Tailwind CSS không hoạt động, kiểm tra:
+1. File `tailwind.config.js` phải quét đúng thư mục `./src/**/*.{js,jsx,ts,tsx}`
+2. Restart Metro bundler với cache clear: `npx expo start --clear`
+3. Kiểm tra file `babel.config.js` có preset `nativewind/babel`
+4. Kiểm tra file `metro.config.js` đã wrap với `withNativeWind`
+
+### Lỗi "Couldn't find a navigation context"
+
+Đây là lỗi phổ biến khi:
+1. Sử dụng `SafeAreaProvider` sai vị trí (phải wrap ở root layout, không wrap trong screen)
+2. Import hooks từ `@react-navigation/native` thay vì `expo-router`
+3. Giải pháp: Đảm bảo `SafeAreaProvider` chỉ nằm trong `src/app/_layout.tsx`
+
+### App không load hoặc màn hình trắng
+
+1. Check console log để xem lỗi chi tiết
+2. Đảm bảo fonts đã load xong trong `_layout.tsx`
+3. Kiểm tra API endpoints trong file `.env` có đúng không
+4. Clear cache: `npx expo start --clear`
 
 ## 🤝 Development Workflow
 
-1. Tạo type definitions trong `types/`
-2. Tạo các url endpoint trong `api/apiConstants`
-3. Tạo API service trong `api/services/`
-4. Tạo Zustand store trong `store/`
-5. Tạo UI components trong `components/`
-6. Tạo screen/route trong `app/`
+1. Tạo type definitions trong `src/types/`
+2. Tạo các url endpoint trong `src/api/config/apiConstants.ts`
+3. Tạo API service trong `src/api/services/`
+4. Tạo Zustand store trong `src/store/`
+5. Tạo UI components trong `src/components/`
+6. Tạo screen/route trong `src/app/`
+
+## 📌 Important Notes
+
+- **Cấu trúc thư mục**: Toàn bộ source code nằm trong thư mục `src/`, giúp tổ chức code rõ ràng và dễ maintain
+- **Tailwind config**: File `tailwind.config.js` đã được cấu hình để quét `./src/**/*.{js,jsx,ts,tsx}` thay vì root folders
+- **Path aliases**: Sử dụng `@/` để import từ `src/` (ví dụ: `import { Header } from '@/components/common/Header'`)
+- **SafeAreaProvider**: Đã được wrap ở root layout (`src/app/_layout.tsx`), không cần wrap lại trong các screen con
+- **NativeWind**: Sử dụng `className` prop với Tailwind CSS syntax, đã config trong `babel.config.js` và `metro.config.js`
 
 
 Được phát triển với ❤️ bởi team VLNV6 - Nam ^^

@@ -6,7 +6,7 @@ import { Banner } from '@/types/banner';
 export interface GetBannerParams {
     offset?: number;
     limit?: number;
-    position?: string; // 'home', 'category', etc.
+    position?: string;
 }
 
 export const bannerService = {
