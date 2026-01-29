@@ -6,12 +6,12 @@ import { ActivityIndicator, Text, View } from 'react-native'
 import { CategoryCard } from './CategoryCard'
 
 const CategorySection = () => {
-        // Lấy state từ store
+    // Lấy state từ store
     const categories = useCurrentPageMeta();
     const loading = usePageMetaLoading();
     const error = usePageMetaError();
     const fetchPageMeta = usePageMetaStore(state => state.fetchPageMeta);
-    
+
     // Fetch data khi component mount
     useEffect(() => {
         if (categories == null) {
@@ -34,7 +34,7 @@ const CategorySection = () => {
         return (
             <View className="bg-white mt-4 mb-4 py-5 items-center justify-center">
                 <Text className="text-red-500 mb-2">Lỗi khi tải ngành nghề</Text>
-                <Text 
+                <Text
                     className="text-blue-600 underline"
                     onPress={() => fetchPageMeta()}
                 >
@@ -44,7 +44,7 @@ const CategorySection = () => {
         );
     }
 
-    const result = categories?.links.filter((item, index) => index <= 4 || item.id === 4002);
+    const result = categories?.links.filter((item: CategoryItem, index: number) => index <= 4 || item.id === 4002);
 
     return (
         <View className="bg-white mt-4 mb-4 py-5">
@@ -70,10 +70,10 @@ const CategorySection = () => {
 
                 {/* Loading indicator khi đang refresh */}
                 {loading && categories == null && (
-                <View className="py-2 items-center">
-                    <ActivityIndicator size="small" color="#2563EB" />
-                </View>
-            )}
+                    <View className="py-2 items-center">
+                        <ActivityIndicator size="small" color="#2563EB" />
+                    </View>
+                )}
 
             </View>
         </View>

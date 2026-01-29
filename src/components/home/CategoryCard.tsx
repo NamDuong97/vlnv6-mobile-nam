@@ -18,25 +18,25 @@ const SPRITE_CONFIG = {
   iconSize: 42,
 };
 
-export const CategoryCard: React.FC<CategoryCardProps> = ({ 
-  category, 
+export const CategoryCard: React.FC<CategoryCardProps> = ({
+  category,
   onPress
 }) => {
   const isHot = category.is_hot || category.hot;
-  
+
   // Detect xem icon_pos là grid hay pixel
   const detectPositionType = () => {
     const x = parseInt(category.icon_pos.x);
     const y = parseInt(category.icon_pos.y);
     return x < 10 && y < 10 ? 'grid' : 'pixel';
   };
-  
+
   // Tính vị trí
   const calculatePosition = () => {
     const type = detectPositionType();
     const x = parseInt(category.icon_pos.x);
     const y = parseInt(category.icon_pos.y);
-    
+
     if (type === 'grid') {
       // Grid position: x = col, y = row
       return {
@@ -55,18 +55,18 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
   const spritePosition = calculatePosition();
 
   return (
-   <TouchableOpacity
+    <TouchableOpacity
       onPress={onPress}
       className="items-center justify-center w-[30%] mb-4"
     >
       <View className="bg-white p-3 items-center justify-center w-full relative">
-        {category.hot  && (
+        {category.hot && (
           <View className="absolute -top-1 -right-1 bg-[rgb(191,29,40)] px-2 py-0.5 rounded-xl z-10">
             <Text className="text-white text-xs font-bold">HOT</Text>
           </View>
         )}
 
-         <View className="w-[42px] h-[42px] overflow-hidden relative">
+        <View className="w-[42px] h-[42px] overflow-hidden relative">
           <ImageBackground
             source={SPRITE_CONFIG.source}
             className="absolute"
@@ -85,7 +85,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
         {category.name}
       </Text>
 
-      {category.total  && !category.hot && (
+      {category.total && !category.hot && (
         <Text className="text-[12px] text-black-300 text-center">
           {category.total.toLocaleString('vi-VN')} công việc
         </Text>

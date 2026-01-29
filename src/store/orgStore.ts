@@ -5,7 +5,6 @@ import { storage } from '@/utils/storage';
 import { create } from 'zustand';
 
 interface OrgState {
-    fetchOrganizations: any;
     orgsMap: { [id: number]: OrganizationItem };
     orgsList: OrganizationItem[];
     orgsOutstanding: OrganizationItem[];
@@ -25,7 +24,7 @@ interface OrgState {
     getSelectedOrg: () => OrganizationItem | undefined;
     orgHydrate: () => Promise<void>;
     orgRefresh: () => Promise<void>;
-    fetchOrganizationOutstanding: () => Promise<void>;
+    fetchOrganizationOutstanding: (param?: any) => Promise<void>;
 }
 
 const STORAGE_KEY = 'ORG_OUTSTANDING';

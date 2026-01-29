@@ -1,8 +1,4 @@
-import {
-    useCitySelectors,
-    useCityStore,
-    useProvincesWithoutWholeCountry
-} from '@/store/cityStore';
+import { useCitySelectors, useCityStore, useProvincesWithoutWholeCountry } from '@/store/cityStore';
 import { Image } from 'expo-image';
 import React, { useEffect, useMemo, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -291,7 +287,7 @@ export default function LocationPickerModal({
                         >
                             {step === "province" ? (
                                 // DANH SÁCH TỈNH
-                                <View> 
+                                <View>
                                     {/* "Toàn quốc" option */}
                                     <TouchableOpacity
                                         onPress={handleSelectWholeCountry}
@@ -345,7 +341,7 @@ export default function LocationPickerModal({
                                 </View>
                             ) : (
                                 // DANH SÁCH HUYỆN
-                                <View> 
+                                <View>
                                     {selectedProvince && (
                                         <>
                                             {/* "Tất cả quận/huyện" option */}
