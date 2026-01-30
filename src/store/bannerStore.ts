@@ -102,8 +102,6 @@ export const useBannerStore = create<BannerState>((set, get) => ({
                 bannerService.getHomeBanners()
             ]);
 
-            console.log("homeResponse:", homeResponse);
-
             const bannersMap: { [id: number]: Banner } = {};
             homeResponse.forEach(banner => {
                 bannersMap[banner.id] = banner;

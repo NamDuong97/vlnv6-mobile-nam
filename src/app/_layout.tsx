@@ -23,6 +23,7 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
+  // Kiểm tra xem dữ liệu đã load xong chưa rồi mới render UI
   const ready = useBootstrapStore(s => s.ready)
 
   useEffect(() => {
@@ -39,7 +40,8 @@ export default function RootLayout() {
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
-    return null; // Hoặc return loading indicator
+    // Hoặc return loading indicator
+    return null;
   }
 
   if (!ready) {

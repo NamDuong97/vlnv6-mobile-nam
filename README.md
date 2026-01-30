@@ -225,14 +225,7 @@ npm run web
 - **react-native-safe-area-context** (~5.6.0): Safe area boundaries (notch, home indicator)
 - **react-native-screens** (~4.16.0): Native screen optimization
 
-## 🔧 Scripts
 
-```bash
-npm start          # Khởi động Expo development server
-npm run android    # Chạy trên Android emulator/device
-npm run ios        # Chạy trên iOS simulator/device
-npm run web        # Chạy trên web browser
-```
 
 ## 🏛️ Kiến trúc ứng dụng
 
@@ -267,11 +260,6 @@ Sử dụng Zustand với pattern:
 - **Atomic design**: Cards, Sections, Lists
 - Sử dụng NativeWind (Tailwind) cho styling với `className`
 
-## 🌐 API Endpoints
-
-Dự án kết nối với 2 API servers:
-- **Primary API**: https://sandbox-api.muaban.net
-- **Secondary API**: https://vieclam.net
 
 ## 🐛 Troubleshooting
 

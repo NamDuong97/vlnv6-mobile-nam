@@ -29,5 +29,8 @@ export const API_ENDPOINTS = {
 
     // BANNER
     BANNERS_HOME: '/cms/v1/banners/3/job-home',
+
+    // SEO
+    SEO_JOB_HOME: '/seo/v1/seo/job-home'
 } as const;
 
