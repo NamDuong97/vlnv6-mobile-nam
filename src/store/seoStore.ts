@@ -109,7 +109,6 @@ export const useSeoStore = create<SeoState>()(
                 try {
                     // Truyền ID vào service nếu có
                     const seoData = await seoService.getSeoJobHome();
-                    console.log("seoData", seoData)
                     // Cache với đúng key
                     const newCache = new Map(cachedSeo);
                     newCache.set(cacheKey, seoData);

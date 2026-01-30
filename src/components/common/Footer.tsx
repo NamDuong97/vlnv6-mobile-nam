@@ -1,9 +1,23 @@
+import { useCommonStore, useFooterData } from '@/store/commonStore';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
 
 const Footer = () => {
+    const footerData = useFooterData();
+    const commonStore = useCommonStore();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!footerData) {
+                await commonStore.fetchFooter();
+            }
+        };
+
+        fetchData();
+    }, [footerData]);
+
     return (
         <View className="bg-white px-4 pt-6 pb-16">
             <View className="flex-row items-center mb-4">
@@ -31,19 +45,32 @@ const Footer = () => {
             <View className="flex-row justify-between mb-4">
                 <View className="flex-1 mr-4">
                     <Text className="font-semibold text-primary mb-2">Về chúng tôi</Text>
-                    <Text className="text-sm text-gray-600 mb-1">Bảng giá dịch vụ</Text>
-                    <Text className="text-sm text-gray-600 mb-1">Điều khoản sử dụng</Text>
-                    <Text className="text-sm text-gray-600 mb-1">Quy chế hoạt động</Text>
-                    <Text className="text-sm text-gray-600 mb-1">Chính sách bảo mật</Text>
-                    <Text className="text-sm text-gray-600 mb-1">Giải quyết tranh chấp</Text>
+                    {commonStore.loading ? (
+                        <Text className="text-sm text-gray-600 mb-1">Loading...</Text>
+                    ) : footerData?.about.map((item) => (
+                        <Link
+                            key={item.id}
+                            href={item.url}
+                            className="text-sm text-gray-600 mb-1"
+                        >
+                            {item.name}
+                        </Link>
+                    ))}
                 </View>
 
                 <View className="flex-1">
                     <Text className="font-semibold text-primary mb-2">Dành cho ứng viên</Text>
-                    <Text className="text-sm text-gray-600 mb-1">Tạo hồ sơ</Text>
-                    <Text className="text-sm text-gray-600 mb-1">Tìm việc làm</Text>
-                    <Text className="text-sm text-gray-600 mb-1">Cẩm nang nghề nghiệp</Text>
-                    <Text className="text-sm text-gray-600 mb-1">Mẹo tìm việc</Text>
+                    {commonStore.loading ? (
+                        <Text className="text-sm text-gray-600 mb-1">Loading...</Text>
+                    ) : footerData?.candidate.map((item) => (
+                        <Link
+                            key={item.id}
+                            href={item.url}
+                            className="text-sm text-gray-600 mb-1"
+                        >
+                            {item.name}
+                        </Link>
+                    ))}
                 </View>
             </View>
 
@@ -51,10 +78,17 @@ const Footer = () => {
             <View className="flex-row justify-between mb-4">
                 <View className="flex-1 mr-4">
                     <Text className="font-semibold text-primary mb-2">Dành cho nhà tuyển dụng</Text>
-                    <Text className="text-sm text-gray-600 mb-1">Tìm kiếm ứng viên</Text>
-                    <Text className="text-sm text-gray-600 mb-1">Quản lý ứng viên</Text>
-                    <Text className="text-sm text-gray-600 mb-1">Quản lý tin tuyển dụng</Text>
-                    <Text className="text-sm text-gray-600 mb-1">Mẹo tuyển dụng</Text>
+                    {commonStore.loading ? (
+                        <Text className="text-sm text-gray-600 mb-1">Loading...</Text>
+                    ) : footerData?.employer.map((item) => (
+                        <Link
+                            key={item.id}
+                            href={item.url}
+                            className="text-sm text-gray-600 mb-1"
+                        >
+                            {item.name}
+                        </Link>
+                    ))}
                 </View>
 
                 <View className="flex-1">
